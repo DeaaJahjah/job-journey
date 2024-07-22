@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "675581530463",
+    "project_id": "job-journey-68723",
+    "storage_bucket": "job-journey-68723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675581530463:android:72eb7446be6c673f2226ea",
+        "android_client_info": {
+          "package_name": "com.example.job_journey"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyIjdmJvigzrrEy6Tr1BpZPXVSp_udUgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
