@@ -1,0 +1,22 @@
+{
+    "jobTitle": "Job title",
+    "jobType": "Job type",
+    "description": "Description",
+    "requirements": "Requirements",
+    "benefits": "Benefits",
+    "additionalInfo": "Additional info",
+    "salary": "Salary",
+    "location": "Location",
+    "experienceLevel": "Experience level",
+    "requiredDocuments": "Required documents",
+    "applicationDeadline": "Application deadline",
+    "category": "Category",
+    "jobs": "Jobs",
+    "addJob": "Add a job",
+    "editJob": "Edti job",
+    "add": "Add",
+    "edit": "Edit",
+    "requirement": "Requirement",
+    "document": "Document",
+    "benefit": "Benefit"
+}

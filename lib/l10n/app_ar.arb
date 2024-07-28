@@ -1,0 +1,23 @@
+{
+    "jobTitle": "عنوان الوظيفة",
+    "jobType": "نوع الوظيفة",
+    "description": "الوصف",
+    "requirements": "المتطلبات",
+    "benefits": "الفوائد",
+    "additionalInfo": "معلومات إضافية",
+    "salary": "الراتب",
+    "location": "مكان العمل",
+    "experienceLevel": "مستوى الخبرة",
+    "requiredDocuments": "الأوراق المطلوبة",
+    "applicationDeadline": "آخر موعد للتقديم",
+    "category": "التصنيف",
+    "jobs": "الوظائف",
+    "job": "وظيفة",
+    "addJob": "إضافة وظيفة",
+    "editJob": "تعديل وظيفة",
+    "add": "إضافة",
+    "edit": "تعديل",
+    "requirement": "متطلب",
+    "document": "ورقة",
+    "benefit": "فائدة"
+}
