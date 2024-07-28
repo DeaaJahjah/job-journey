@@ -2,25 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 
 class TextFieldCustom extends StatelessWidget {
-  int? maxLine = 1;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final void Function(String)? onChanged;
+  final bool validate;
+  final void Function()? onTap;
   final String text;
-  final TextEditingController controller;
   final IconData? icon;
-  TextInputType? keyboardType;
-  void Function(String)? onChanged;
-  TextFieldCustom(
+  final Color? iconColor;
+  final void Function()? onIconTap;
+  final bool readOnly;
+  final int? maxLine;
+  const TextFieldCustom(
       {super.key,
       required this.text,
-      required this.controller,
+      this.controller,
+      this.onIconTap,
       this.icon,
+      this.iconColor,
+      this.validate = true,
+      this.onTap,
       this.keyboardType = TextInputType.text,
-      this.maxLine,
+      this.maxLine = 1,
+      this.readOnly = false,
       this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
       maxLines: maxLine,
+      readOnly: readOnly,
       keyboardType: keyboardType,
       style: const TextStyle(
         color: white,
@@ -33,9 +45,12 @@ class TextFieldCustom extends StatelessWidget {
           fillColor: darkGray,
           filled: true,
           hintStyle: const TextStyle(color: gray, fontFamily: font, fontSize: 16, fontWeight: FontWeight.normal),
-          suffixIcon: Icon(
-            icon,
-            color: blue,
+          suffixIcon: InkWell(
+            onTap: onIconTap,
+            child: Icon(
+              icon,
+              color: iconColor ?? blue,
+            ),
           ),
           isDense: true,
           enabledBorder: OutlineInputBorder(
@@ -59,7 +74,7 @@ class TextFieldCustom extends StatelessWidget {
           ),
           labelStyle: const TextStyle(color: white, fontFamily: font, fontSize: 14, fontWeight: FontWeight.normal)),
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if ((value == null || value.isEmpty) && validate) {
           return '';
         }
         return null;

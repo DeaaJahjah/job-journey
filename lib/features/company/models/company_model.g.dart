@@ -11,14 +11,14 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) => CompanyModel(
       name: json['name'] as String,
       phoneNumber: json['phone_number'] as String,
       email: json['email'] as String,
-      profilePicture: json['profile_picture'] as String?,
       password: json['password'] as String,
       industry: json['industry'] as String,
       location: json['location'] as String,
-      contactPhone: json['contact_phone'] as String?,
-      contactEmail: json['contact_email'] as String?,
       description: json['description'] as String,
       foundingDate: DateTime.parse(json['founding_date'] as String),
+      profilePicture: json['profile_picture'] as String?,
+      contactPhone: json['contact_phone'] as String?,
+      contactEmail: json['contact_email'] as String?,
     );
 
 Map<String, dynamic> _$CompanyModelToJson(CompanyModel instance) =>
