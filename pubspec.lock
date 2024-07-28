@@ -475,6 +475,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_markdown:
+    dependency: "direct main"
+    description:
+      name: flutter_markdown
+      sha256: "2e8a801b1ded5ea001a4529c97b1f213dcb11c6b20668e081cafb23468593514"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.3"
   flutter_parsed_text:
     dependency: transitive
     description:
@@ -525,6 +533,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+
   gradient_icon:
     dependency: "direct main"
     description:
@@ -533,6 +542,16 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+
+  google_generative_ai:
+    dependency: "direct main"
+    description:
+      name: google_generative_ai
+      sha256: "76e35d93b8c1cd888f69a1a371f8c5dc54cec372b6c74a4c0a5d506e7cf82c1a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.3"
+
   graphs:
     dependency: transitive
     description:
@@ -725,6 +744,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  markdown:
+    dependency: transitive
+    description:
+      name: markdown
+      sha256: ef2a1298144e3f985cc736b22e0ccdaf188b5b3970648f2d9dc13efd1d9df051
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.2.2"
   matcher:
     dependency: transitive
     description:
