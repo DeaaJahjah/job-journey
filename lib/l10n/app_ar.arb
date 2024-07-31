@@ -19,5 +19,11 @@
     "edit": "تعديل",
     "requirement": "متطلب",
     "document": "ورقة",
-    "benefit": "فائدة"
+    "benefit": "فائدة",
+    "applyForJob": "تقديم على عمل",
+    "errorHappendWhileFetchingData": "حدث خطأ أثناء جلب البيانات",
+    "noData": "لا يوجد بيانات",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "profile": "الملف الشخصي"
 }

@@ -6,6 +6,7 @@ import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
+import 'package:job_journey/features/company/screens/company_profile_screen.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
@@ -82,21 +83,14 @@ class JobCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(JobDetailsScreen.routeName, arguments: job.id);
+        Navigator.of(context).pushNamed(JobDetailsScreen.routeName, arguments: job);
       },
       child: Container(
-        // elevation: 9,
-        decoration: BoxDecoration(
-          boxShadow: [BoxShadow(blurRadius: 1, spreadRadius: 2.5, color: Colors.grey[900]!, offset: Offset(0, 1))],
-          borderRadius: BorderRadius.circular(15),
-          // gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-          //   Color.fromARGB(255, 252, 149, 76),
-          //   Color.fromARGB(255, 249, 120, 120),
-          // ])
-          color: background, // Color.fromARGB(255, 31, 31, 31),
-        ),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(blurRadius: 1, spreadRadius: 2.5, color: Colors.grey[900]!, offset: const Offset(0, 1))
+        ], borderRadius: BorderRadius.circular(15), color: background),
         margin: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,20 +98,21 @@ class JobCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // if (job.companyPicture != null)
-                // Align(
-                //   alignment: Alignment.centerLeft,
-                // child:
-                Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10))),
-                  child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
-                    child: Image.network(
-                      "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305", //job.companyPicture!,
-                      height: 75,
-                      // width: 200,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(CompanyProfileScreen.routeName);
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                    child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                      child: Image.network(
+                        "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305", //job.companyPicture!,
+                        height: 75,
+                      ),
                     ),
                   ),
                 ),
@@ -153,25 +148,11 @@ class JobCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // const Spacer(),
-                // Align(
-                //   alignment: Alignment.centerLeft,
-                //   child:
                 Container(
                   padding: const EdgeInsets.all(5),
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-                        // Color(0xffFFD099),
-                        // Color(0xffFF9209),
-                        // Color(0xffFF6C22),
-                        // Color.fromARGB(255, 255, 99, 21),
-                        Color.fromARGB(255, 124, 145, 250),
-
-                        blue
-                        // Color.fromARGB(255, 246, 112, 208),
-                        // Color.fromARGB(255, 156, 27, 225),
-                        // Color(0xff615EFC),
-                      ]),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [lightBlue, blue]),
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
                   child: Text(
                     job.jobType,
@@ -190,11 +171,8 @@ class JobCard extends StatelessWidget {
                     children: [
                       const GradientIcon(
                           offset: Offset(0, 0),
-                          gradient: LinearGradient(colors: [
-                            Color(0xffFFD099),
-                            Color(0xffFF9209),
-                            Color(0xffFF6C22),
-                          ]),
+                          gradient: LinearGradient(
+                              colors: [lightBlue, blue], begin: Alignment.topRight, end: Alignment.bottomLeft),
                           icon: Icons.location_pin,
                           size: 19),
                       const SizedBox(width: 2),
@@ -210,23 +188,10 @@ class JobCard extends StatelessWidget {
                       const Spacer(),
                       const GradientIcon(
                           offset: Offset(0, 0),
-                          gradient: LinearGradient(colors: [
-                            Color(0xffFFD099),
-                            Color(0xffFF9209),
-                            Color(0xffFF6C22),
-                          ]),
+                          gradient: LinearGradient(
+                              colors: [lightBlue, blue], begin: Alignment.topRight, end: Alignment.bottomLeft),
                           icon: Icons.category,
                           size: 19),
-                      const SizedBox(width: 2),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            job.location,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: white, fontWeight: FontWeight.w600),
-                          )),
                       const SizedBox(width: 2),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
@@ -249,11 +214,7 @@ class JobCard extends StatelessWidget {
                           center: Alignment.centerRight,
                           radius: 5.0,
                           tileMode: TileMode.clamp,
-                          colors: [
-                            Color(0xffFFD099),
-                            Color(0xffFF9209),
-                            Color(0xffFF6C22),
-                          ],
+                          colors: [lightBlue, blue],
                         ).createShader(bounds),
                         child: Text(
                           '${context.loc.experienceLevel}: ',
@@ -283,11 +244,7 @@ class JobCard extends StatelessWidget {
                           center: Alignment.centerRight,
                           radius: 2,
                           tileMode: TileMode.clamp,
-                          colors: [
-                            Color(0xffFFD099),
-                            Color(0xffFF9209),
-                            Color(0xffFF6C22),
-                          ],
+                          colors: [lightBlue, blue],
                         ).createShader(bounds),
                         child: Text(
                           '${context.loc.salary}: ',
@@ -312,29 +269,21 @@ class JobCard extends StatelessWidget {
                   Row(
                     children: [
                       ShaderMask(
-                        blendMode: BlendMode.srcIn,
-                        shaderCallback: (Rect bounds) => const RadialGradient(
-                          center: Alignment.centerRight,
-                          radius: 4.5,
-                          tileMode: TileMode.clamp,
-                          colors: [
-                            // Color(0xffFFD099),
-                            // Color(0xffFF9209),
-                            // Color(0xffFF6C22),
-
-                            Color(0xffD1D8C5),
-                            Color(0xff7E8EF1),
-                            Color(0xff615EFC),
-                          ],
-                        ).createShader(bounds),
-                        child: Text(
-                          '${context.loc.applicationDeadline}: ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: gray, fontWeight: FontWeight.w600),
-                        ),
-                      ),
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: (Rect bounds) => const RadialGradient(
+                                center: Alignment.centerRight,
+                                radius: 4.5,
+                                tileMode: TileMode.clamp,
+                                colors: [lightBlue, blue],
+                              ).createShader(bounds),
+                          child: Text(
+                            '${context.loc.applicationDeadline}: ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: Colors.grey, fontWeight: FontWeight.w600),
+                            // ),
+                          )),
                       Expanded(
                         child: Text(
                           job.applicationDeadline?.substring(0, 10) ?? '',

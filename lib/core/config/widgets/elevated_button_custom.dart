@@ -11,14 +11,17 @@ class ElevatedButtonCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(color),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))),
-          onPressed: onPressed,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8),
+          height: 40,
+          // width: MediaQuery.sizeOf(context).width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                  begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [lightBlue, blue])),
           child: Text(
             text,
             style: TextStyle(color: textColor, fontFamily: font, fontWeight: FontWeight.w600, fontSize: 14),

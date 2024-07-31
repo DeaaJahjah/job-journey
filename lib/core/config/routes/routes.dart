@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/features/auth/screens/login_screen.dart';
 import 'package:job_journey/features/auth/screens/sign_up_screen.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
+import 'package:job_journey/features/company/screens/company_profile_screen.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:job_journey/features/company/screens/job_overview_screen.dart';
 import 'package:job_journey/home_screen.dart';
@@ -26,6 +27,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: ((_) => const AddJobScreen()));
     case JobDetailsScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const JobDetailsScreen()), settings: settings);
+    case CompanyProfileScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const CompanyProfileScreen()), settings: settings);
   }
 
   return null;

@@ -7,7 +7,7 @@ const Color darkGray = Color(0xff252525);
 const Color onbackground = Color.fromARGB(255, 0, 0, 0);
 const Color background = Color.fromARGB(255, 0, 0, 0);
 const Color white = Color(0xffffffff);
-
+const Color lightBlue = Color.fromARGB(255, 124, 145, 250);
 const Color gray = Color.fromARGB(255, 224, 223, 223);
 
 const String font = 'Tajawal';

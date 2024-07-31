@@ -60,6 +60,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
         title: Text(context.loc.addJob),
       ),
       body: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: ListView(
             padding: const EdgeInsets.all(10),
