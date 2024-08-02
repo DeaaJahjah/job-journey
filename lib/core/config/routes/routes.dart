@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_journey/features/auth/screens/comapny_sign_up_screen.dart';
 import 'package:job_journey/features/auth/screens/login_screen.dart';
-import 'package:job_journey/features/auth/screens/sign_up_screen.dart';
+import 'package:job_journey/features/auth/screens/selecte_account_type_screen.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:job_journey/features/company/screens/job_overview_screen.dart';
@@ -16,8 +17,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const SplashScreen());
     case LoginScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const LoginScreen()));
-    case SignUpScreen.routeName:
-      return MaterialPageRoute(builder: ((_) => const SignUpScreen()));
+    case ComapnySignUpScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const ComapnySignUpScreen()));
     case JobsOverViewScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const JobsOverViewScreen()));
     case HomeScreen.routeName:
@@ -26,6 +27,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: ((_) => const AddJobScreen()));
     case JobDetailsScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const JobDetailsScreen()), settings: settings);
+      
+    case SelectAccountTypeScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const SelectAccountTypeScreen()), settings: settings);
   }
 
   return null;

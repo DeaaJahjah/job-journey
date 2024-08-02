@@ -1,5 +1,5 @@
 {
-    "jobTitle": "Job title",
+"jobTitle": "Job title",
     "jobType": "Job type",
     "description": "Description",
     "requirements": "Requirements",
@@ -18,5 +18,20 @@
     "edit": "Edit",
     "requirement": "Requirement",
     "document": "Document",
-    "benefit": "Benefit"
+    "benefit": "Benefit",
+    "next":"Next",
+
+    "comapny":"Company",
+    "jobSeekar":"Job Seekar"  ,
+    "login":"Login",
+    "email":"Email",
+    "password":"Password",
+    "enterTheEmailAndPassword":"You must enter the email and password",
+    "plzEnterValidEmail":"Please enter the a valid email", 
+    "industry":"Industry",
+    "name":"Name",
+    "phoneNumber":"Phone Number",
+    "foundingDate":"Founding Data",
+    "create":"Create",
+    "createCompany":"Craete Company Account"
 }

@@ -7,7 +7,7 @@ part 'company_model.g.dart';
 
 @JsonSerializable()
 class CompanyModel extends Equatable {
-  final String id;
+  final String? id;
   final String name;
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
@@ -17,16 +17,12 @@ class CompanyModel extends Equatable {
   final String password;
   final String industry;
   final String location;
-  @JsonKey(name: 'contact_phone')
-  final String? contactPhone;
-  @JsonKey(name: 'contact_email')
-  final String? contactEmail;
   final String description;
   @JsonKey(name: 'founding_date')
-  final DateTime foundingDate;
+  final String foundingDate;
 
   const CompanyModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.phoneNumber,
     required this.email,
@@ -36,8 +32,7 @@ class CompanyModel extends Equatable {
     required this.description,
     required this.foundingDate,
     this.profilePicture,
-    this.contactPhone,
-    this.contactEmail,
+  
   });
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) => _$CompanyModelFromJson(json);
@@ -59,8 +54,7 @@ class CompanyModel extends Equatable {
         description,
         foundingDate,
         profilePicture,
-        contactPhone,
-        contactEmail
+
       ];
 
   CompanyModel copyWith({
@@ -75,7 +69,7 @@ class CompanyModel extends Equatable {
     String? contactPhone,
     String? contactEmail,
     String? description,
-    DateTime? foundingDate,
+    String? foundingDate,
   }) {
     return CompanyModel(
       id: id ?? this.id,
@@ -86,8 +80,7 @@ class CompanyModel extends Equatable {
       password: password ?? this.password,
       industry: industry ?? this.industry,
       location: location ?? this.location,
-      contactPhone: contactPhone ?? this.contactPhone,
-      contactEmail: contactEmail ?? this.contactEmail,
+      
       description: description ?? this.description,
       foundingDate: foundingDate ?? this.foundingDate,
     );

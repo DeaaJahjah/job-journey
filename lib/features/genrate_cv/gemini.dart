@@ -6,9 +6,7 @@ import 'package:job_journey/core/keys.dart';
 const String _apiKey = GEMINI_KEY;
 
 class GeminiCvMaker extends StatefulWidget {
-  const GeminiCvMaker({super.key, required this.title});
-
-  final String title;
+  const GeminiCvMaker({super.key});
 
   @override
   State<GeminiCvMaker> createState() => _GeminiCvMakerState();
@@ -19,7 +17,7 @@ class _GeminiCvMakerState extends State<GeminiCvMaker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('widget.title'),
       ),
       body: const ChatWidget(apiKey: _apiKey),
     );

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 
 class CompanyDbServiec {
@@ -43,8 +44,32 @@ class CompanyDbServiec {
 
       return addedJob;
     } catch (e) {
-      print('catche errororororo' + e.toString());
+      print('catche errororororo$e');
       return null;
+    }
+  }
+
+  Future<CompanyModel?> createCompany({required CompanyModel company}) async {
+    try {
+      var doc = await _db.collection('companies').add(company.toJson());
+
+      final cc = company.copyWith(id: doc.id);
+
+      return cc;
+    } catch (e) {
+      print('catche errororororo$e');
+      return null;
+    }
+  }
+
+  Future<bool> updateCompany({required CompanyModel company}) async {
+    try {
+      _db.collection('companies').doc(company.id).update(company.toJson());
+
+      return true;
+    } catch (e) {
+      print('catche errororororo$e');
+      return false;
     }
   }
 }
