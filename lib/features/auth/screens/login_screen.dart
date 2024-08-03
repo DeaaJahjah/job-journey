@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
-import 'package:job_journey/features/auth/screens/sign_up_screen.dart';
+import 'package:job_journey/features/auth/screens/selecte_account_type_screen.dart';
 import 'package:job_journey/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,8 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               sizedBoxLarge,
               sizedBoxLarge,
+              sizedBoxLarge,
+              sizedBoxLarge,
               Image.asset(
-                'assets/images/logo-with-text.png',
+                'assets/images/logo.png',
                 height: MediaQuery.sizeOf(context).height * 0.25,
               ),
               sizedBoxLarge,
@@ -51,26 +54,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextFieldCustom(
                           keyboardType: TextInputType.emailAddress,
-                          text: 'البريد الالكتروني',
+                          text: context.loc.email,
                           controller: emailController),
                       sizedBoxMedium,
                       TextFieldCustom(
-                          keyboardType: TextInputType.text, text: 'كلمة المرور', controller: passwordcontroller),
+                          keyboardType: TextInputType.text, text: context.loc.password, controller: passwordcontroller),
                       sizedBoxLarge,
                       isLoading
                           ? const CustomProgress()
                           : ElevatedButtonCustom(
                               color: blue,
                               textColor: white,
-                              text: 'تسجيل دخول',
+                              text: context.loc.login,
                               onPressed: () async {
                                 if (emailController.text.isEmpty || passwordcontroller.text.isEmpty) {
-                                  showErrorSnackBar(context, 'يجب عليك ادخال البريد الالكتروني وكلمة السر');
+                                  showErrorSnackBar(context, context.loc.enterTheEmailAndPassword);
 
                                   return;
                                 }
                                 if (!emailController.text.contains('@')) {
-                                  showErrorSnackBar(context, 'يجب ادخال بريد الكتروني صالح');
+                                  showErrorSnackBar(context, context.loc.plzEnterValidEmail);
 
                                   return;
                                 }
@@ -85,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                 print(result);
                                 setState(() {
-                                  isLoading = true;
+                                  isLoading = false;
                                 });
                                 if (result != null) {
                                   Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
@@ -107,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                     color: blue, fontSize: 16, fontFamily: font, fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                              Navigator.of(context).pushNamed(SelectAccountTypeScreen.routeName);
                             },
                           ),
                         ],

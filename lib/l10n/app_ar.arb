@@ -26,4 +26,20 @@
     "email": "البريد الإلكتروني",
     "phoneNumber": "رقم الهاتف",
     "profile": "الملف الشخصي"
+    "next":"التالي",
+    "comapny":"شركة",
+    "jobSeekar":"باحث عن عمل",
+    "selectAccountType":"اختر نوع الحساب",
+    "login":"تسجيل دخول",
+    "email":"البريد الالكتروني",
+    "password":"كلمة السر",
+    "enterTheEmailAndPassword":"يجب عليك ادخال البريد الالكتروني وكلمة السر",
+    "plzEnterValidEmail":"يجب ادخال بريد الكتروني صالح",
+    "industry":"مجال الصناعة",
+    "name":"الاسم",
+    "phoneNumber":"رقم الهاتف",
+    "foundingDate":"تاريخ التأسيس",
+    "create":"أنشاء",
+    "createCompany":"انشاء حساب شركة"
+
 }

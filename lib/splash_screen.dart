@@ -36,27 +36,30 @@ class SplashScreen extends StatelessWidget {
               curve: Curves.bounceInOut,
               direction: Direction.vertical,
               offset: 0.5,
-              child: const Column(
+              child: Column(
                 children: [
                   // SvgPicture.asset(
                   //   'assets/images/logo.svg',
                   //   height: MediaQuery.sizeOf(context).height * 0.70,
                   // ),
-                  // Image.asset(
-                  //   'assets/images/logo-with-text.png',
-                  //   height: MediaQuery.sizeOf(context).height * 0.25,
-                  // ),
-                  // sizedBoxSmall,
-                  Text(
-                    'Job Journey',
-                    style: TextStyle(fontSize: 24),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: MediaQuery.sizeOf(context).height * 0.25,
                   ),
-                  SizedBox(
+                  sizedBoxSmall,
+
+                  const SizedBox(
                     height: 20,
                   ),
-                  CircularProgressIndicator(color: blue),
+                  const CircularProgressIndicator(color: blue),
+                 
                 ],
               )),
+          const Spacer(),
+          const Text(
+            'Connecting Talent With Opportunity',
+            style: TextStyle(fontSize: 24, color: gray),
+          ),
         ],
       )),
     );

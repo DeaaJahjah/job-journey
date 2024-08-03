@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/routes/routes.dart';
 import 'package:job_journey/features/company/providers/benfits_provider.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
+import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
 import 'package:job_journey/features/company/providers/required_documents_provider.dart';
 import 'package:job_journey/features/company/providers/requirements_provider.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +25,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<RequirementsProvider>(create: (_) => RequirementsProvider()),
         ChangeNotifierProvider<RequiredDocumentsProvider>(create: (_) => RequiredDocumentsProvider()),
         ChangeNotifierProvider<BenefitsProvider>(create: (_) => BenefitsProvider()),
+        ChangeNotifierProvider<CreateUpdateCompanyProvider>(create: (_) => CreateUpdateCompanyProvider()),
+
+        
       ],
       child: MaterialApp(
         onGenerateRoute: onGenerateRoute,
@@ -45,7 +47,11 @@ class App extends StatelessWidget {
             primaryColor: blue,
             scaffoldBackgroundColor: background,
             appBarTheme:
-                const AppBarTheme(backgroundColor: background, centerTitle: true, titleTextStyle: appBarTextStyle),
+                 const AppBarTheme(
+                backgroundColor: background,
+                foregroundColor: white,
+                centerTitle: true,
+                titleTextStyle: appBarTextStyle),
             fontFamily: font),
         initialRoute: '/',
       ),
