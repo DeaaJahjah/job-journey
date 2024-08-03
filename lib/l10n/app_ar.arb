@@ -20,6 +20,12 @@
     "requirement": "متطلب",
     "document": "ورقة",
     "benefit": "فائدة",
+    "applyForJob": "تقديم على عمل",
+    "errorHappendWhileFetchingData": "حدث خطأ أثناء جلب البيانات",
+    "noData": "لا يوجد بيانات",
+    "email": "البريد الإلكتروني",
+    "phoneNumber": "رقم الهاتف",
+    "profile": "الملف الشخصي"
     "next":"التالي",
     "comapny":"شركة",
     "jobSeekar":"باحث عن عمل",
@@ -35,6 +41,5 @@
     "foundingDate":"تاريخ التأسيس",
     "create":"أنشاء",
     "createCompany":"انشاء حساب شركة"
-
 
 }

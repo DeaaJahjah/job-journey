@@ -19,6 +19,13 @@
     "requirement": "Requirement",
     "document": "Document",
     "benefit": "Benefit",
+
+    "applyForJob": "Apply for job",
+    "errorHappendWhileFetchingData": "Error happend while fetching data",
+    "noData": "No Data",
+    "email": "Email",
+    "phoneNumber": "Phone number",
+    "profile": "Profile"
     "next":"Next",
 
     "comapny":"Company",
