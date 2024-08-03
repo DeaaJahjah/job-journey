@@ -17,7 +17,6 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) => CompanyModel(
       description: json['description'] as String,
       foundingDate: json['founding_date'] as String,
       profilePicture: json['profile_picture'] as String?,
-
     );
 
 Map<String, dynamic> _$CompanyModelToJson(CompanyModel instance) =>
@@ -30,7 +29,6 @@ Map<String, dynamic> _$CompanyModelToJson(CompanyModel instance) =>
       'password': instance.password,
       'industry': instance.industry,
       'location': instance.location,
-      
       'description': instance.description,
       'founding_date': instance.foundingDate,
     };

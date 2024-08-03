@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-extension StreamChatContext on BuildContext {
+extension FirebaseContext on BuildContext {
   /// Get user token.
   String? get userToken => FirebaseAuth.instance.currentUser!.displayName;
 
@@ -10,4 +10,6 @@ extension StreamChatContext on BuildContext {
 
   /// get the current user
   User? get firebaseUser => FirebaseAuth.instance.currentUser;
+
+  bool get isCompanyAccount => FirebaseAuth.instance.currentUser!.photoURL == 'company';
 }

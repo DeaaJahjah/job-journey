@@ -7,27 +7,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
-import 'package:job_journey/core/config/widgets/drop_down_custom.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/core/services/file_services.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
-import 'package:job_journey/features/company/models/category.dart';
-import 'package:job_journey/features/company/models/company_model.dart';
-import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
+import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 
-class ComapnySignUpScreen extends StatefulWidget {
-  static const String routeName = '/sign-up';
-  const ComapnySignUpScreen({super.key});
+class JobSeekerSignUpScreen extends StatefulWidget {
+  static const String routeName = '/job-seeker-sign-up';
+  const JobSeekerSignUpScreen({super.key});
 
   @override
-  State<ComapnySignUpScreen> createState() => _ComapnySignUpScreenState();
+  State<JobSeekerSignUpScreen> createState() => _JobSeekerSignUpScreenState();
 }
 
-class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
+class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
   TextEditingController userName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -37,7 +35,10 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
   TextEditingController industry = TextEditingController();
   TextEditingController description = TextEditingController();
 
-  Category? selectedIndustry;
+  TextEditingController certificates = TextEditingController();
+  TextEditingController languages = TextEditingController();
+  TextEditingController skills = TextEditingController();
+  TextEditingController softSkills = TextEditingController();
 
   XFile? pickedimage;
   String fileName = '';
@@ -63,7 +64,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text(context.loc.createCompany, style: appBarTextStyle),
+        title: Text(context.loc.createJobSeeker, style: appBarTextStyle),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -150,8 +151,9 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
               const SizedBox(
                 height: 20,
               ),
+              const Text('المعلومات المهنية'),
               TextFieldCustom(
-                text: context.loc.description,
+                text: context.loc.aboutYou,
                 controller: description,
                 icon: Icons.description,
                 keyboardType: TextInputType.multiline,
@@ -160,26 +162,42 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
               const SizedBox(
                 height: 20,
               ),
-              sizedBoxSmall,
-              DropDownCustom(
-                hint: context.loc.industry,
-                categories: industries.map((e) => e.name).toList(), // jobTypes,
-                selectedItem: selectedIndustry?.name,
-                onChanged: (item) {
-                  setState(() {
-                    selectedIndustry = industries.getCategory(item!);
-                  });
-                },
+              TextFieldCustom(
+                text: context.loc.certificates,
+                controller: certificates,
+                icon: Icons.receipt,
+                keyboardType: TextInputType.multiline,
+                maxLine: null,
               ),
               const SizedBox(
-                height: 20,
+                height: 24,
               ),
               TextFieldCustom(
-                text: context.loc.foundingDate,
-                controller: foundingDate,
-                icon: Icons.date_range,
-                keyboardType: TextInputType.datetime,
-                maxLine: 1,
+                text: context.loc.skills,
+                controller: skills,
+                icon: Icons.bolt_rounded,
+                keyboardType: TextInputType.multiline,
+                maxLine: null,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldCustom(
+                text: context.loc.softSkills,
+                controller: softSkills,
+                icon: Icons.workspaces_outline,
+                keyboardType: TextInputType.multiline,
+                maxLine: null,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldCustom(
+                text: context.loc.languages,
+                controller: languages,
+                icon: Icons.language,
+                keyboardType: TextInputType.multiline,
+                maxLine: null,
               ),
               const SizedBox(
                 height: 24,
@@ -211,10 +229,11 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                             });
                             return;
                           }
+
                           context.firebaseUser!.updateDisplayName(userName.text);
 
                           //set user type
-                          context.firebaseUser!.updatePhotoURL('company');
+                          context.firebaseUser!.updatePhotoURL('jobSeeker');
 
                           String? imageUrl;
 
@@ -233,17 +252,20 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
 
                           //TODO:: create company
 
-                          await context.read<CreateUpdateCompanyProvider>().createCompany(
-                              company: CompanyModel(
-                                  name: userName.text,
-                                  phoneNumber: phoneController.text,
-                                  profilePicture: imageUrl,
-                                  email: email.text,
-                                  password: passwordController.text,
-                                  industry: industry.text,
-                                  location: location.text,
-                                  description: description.text,
-                                  foundingDate: foundingDate.text));
+                          await context.read<JobSeekerProvider>().addJobSeeker(
+                                  user: JobSeekerModel(
+                                name: userName.text,
+                                phoneNumber: phoneController.text,
+                                email: email.text,
+                                password: passwordController.text,
+                                location: location.text,
+                                aboutYou: description.text,
+                                profilePicture: imageUrl,
+                                certificates: certificates.text.split('-'),
+                                languages: languages.text.split('-'),
+                                skills: skills.text.split('-'),
+                                softSkills: softSkills.text.split('-'),
+                              ));
                           setState(() {
                             isLoading = false;
                           });

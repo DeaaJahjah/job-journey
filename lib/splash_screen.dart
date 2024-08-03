@@ -30,6 +30,9 @@ class SplashScreen extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * .3,
+          ),
           ShowUpAnimation(
               delayStart: const Duration(milliseconds: 50),
               animationDuration: const Duration(seconds: 1),
@@ -58,8 +61,9 @@ class SplashScreen extends StatelessWidget {
           const Spacer(),
           const Text(
             'Connecting Talent With Opportunity',
-            style: TextStyle(fontSize: 24, color: gray),
+            style: TextStyle(fontSize: 14, color: gray),
           ),
+          sizedBoxLarge,
         ],
       )),
     );

@@ -96,9 +96,9 @@ flutter:
   fonts:
     - family: Tajawal
       fonts:
-        - asset: assets/fonts/Tajawal-Regular.ttf
-        - asset: assets/fonts/Tajawal-Bold.ttf
-        - asset: assets/fonts/Tajawal-Medium.ttf
-        - asset: assets/fonts/Tajawal-Black.ttf
-          weight: 700
+        - asset: assets/fonts/quest.otf
+        # - asset: assets/fonts/Tajawal-Bold.ttf
+        # - asset: assets/fonts/Tajawal-Medium.ttf
+        # - asset: assets/fonts/Tajawal-Black.ttf
+        #   weight: 700
   

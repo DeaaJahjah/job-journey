@@ -3,6 +3,7 @@ import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/features/auth/screens/comapny_sign_up_screen.dart';
+import 'package:job_journey/features/job_seeker/screens/job_seeker_sign_up_screen.dart';
 
 class SelectAccountTypeScreen extends StatefulWidget {
   static const routeName = '/select-account-type';
@@ -47,18 +48,23 @@ class _SelectAccountTypeScreenState extends State<SelectAccountTypeScreen> {
               ),
             ]),
           ),
-          ElevatedButtonCustom(
-              onPressed: () {
-                if (selectedType == 1) {
-                  Navigator.of(context).pushNamed(ComapnySignUpScreen.routeName);
-                  return;
-                }
-                if (selectedType == 2) {
-                  // Navigator.of(context).pushNamed(CreateBenefactorAccountScreen.routeName);
-                  return;
-                }
-              },
-              text: context.loc.next)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: ElevatedButtonCustom(
+                color: white,
+                textColor: white,
+                onPressed: () {
+                  if (selectedType == 1) {
+                    Navigator.of(context).pushNamed(ComapnySignUpScreen.routeName);
+                    return;
+                  }
+                  if (selectedType == 2) {
+                    Navigator.of(context).pushNamed(JobSeekerSignUpScreen.routeName);
+                    return;
+                  }
+                },
+                text: context.loc.next),
+          )
         ],
       ),
     );

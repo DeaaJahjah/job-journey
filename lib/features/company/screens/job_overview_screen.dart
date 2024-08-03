@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
+import 'package:job_journey/custom_drawer.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
 import 'package:job_journey/features/company/screens/company_profile_screen.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 
 class JobsOverViewScreen extends StatefulWidget {
@@ -33,15 +35,11 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
-      drawer: const Drawer(),
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         toolbarHeight: 90,
         title: Text(context.loc.jobs),
-        automaticallyImplyLeading: false,
-        leading: const Icon(
-          Icons.table_rows_sharp,
-          color: Colors.white,
-        ),
+        
       ),
       body: Consumer<CompanyProvider>(builder: (context, provider, _) {
         final jobs = provider.myJobs;
@@ -63,7 +61,10 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
                 },
               );
       }),
-      floatingActionButton: FloatingActionButton(
+      
+      floatingActionButton: !context.isCompanyAccount
+          ? null
+          : FloatingActionButton(
         backgroundColor: blue,
         onPressed: () {
           Navigator.of(context).pushNamed(AddJobScreen.routeName);

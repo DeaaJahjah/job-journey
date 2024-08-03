@@ -23,9 +23,7 @@
     "applyForJob": "تقديم على عمل",
     "errorHappendWhileFetchingData": "حدث خطأ أثناء جلب البيانات",
     "noData": "لا يوجد بيانات",
-    "email": "البريد الإلكتروني",
-    "phoneNumber": "رقم الهاتف",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
     "next":"التالي",
     "comapny":"شركة",
     "jobSeekar":"باحث عن عمل",
@@ -40,6 +38,12 @@
     "phoneNumber":"رقم الهاتف",
     "foundingDate":"تاريخ التأسيس",
     "create":"أنشاء",
-    "createCompany":"انشاء حساب شركة"
+    "createCompany":"انشاء حساب شركة",
+    "createJobSeeker":"انشاء حساب باحث عن عمل",
+    "aboutYou":"وصف عنك",
+    "certificates": "الشهادات",
+    "languages": "اللغات",
+    "skills": "المهارات",
+    "softSkills": "المهارات الناعمة"
 
 }

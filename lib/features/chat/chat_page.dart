@@ -15,9 +15,9 @@ import 'package:path_provider/path_provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
-    Key? key,
+    super.key,
     required this.room,
-  }) : super(key: key);
+  });
 
   final types.Room room;
 

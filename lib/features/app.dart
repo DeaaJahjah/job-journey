@@ -7,15 +7,12 @@ import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
 import 'package:job_journey/features/company/providers/required_documents_provider.dart';
 import 'package:job_journey/features/company/providers/requirements_provider.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:provider/provider.dart';
 // import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class App extends StatelessWidget {
-  // final StreamChatClient client;
-  const App({
-    super.key,
-    // required this.client,
-  });
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +23,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<RequiredDocumentsProvider>(create: (_) => RequiredDocumentsProvider()),
         ChangeNotifierProvider<BenefitsProvider>(create: (_) => BenefitsProvider()),
         ChangeNotifierProvider<CreateUpdateCompanyProvider>(create: (_) => CreateUpdateCompanyProvider()),
+        ChangeNotifierProvider<JobSeekerProvider>(create: (_) => JobSeekerProvider()),
 
-        
+          
       ],
       child: MaterialApp(
         onGenerateRoute: onGenerateRoute,
@@ -46,8 +44,7 @@ class App extends StatelessWidget {
             brightness: Brightness.light,
             primaryColor: blue,
             scaffoldBackgroundColor: background,
-            appBarTheme:
-                 const AppBarTheme(
+            appBarTheme: const AppBarTheme(
                 backgroundColor: background,
                 foregroundColor: white,
                 centerTitle: true,

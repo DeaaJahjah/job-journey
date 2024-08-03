@@ -5,13 +5,16 @@ import 'package:job_journey/features/company/models/job_model.dart';
 
 class CompanyDbServiec {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final collgeId = FirebaseAuth.instance.currentUser == null ? '' : FirebaseAuth.instance.currentUser!.uid;
+  final userType = FirebaseAuth.instance.currentUser!.photoURL;
 
   Future<List<JobModel>?> getJobs() async {
     try {
       List<JobModel> jobs = [];
-      var query =
-          await _db.collection('jobs').where('company_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+
+                  
+      var query = userType == 'company'
+          ? await _db.collection('jobs').where('company_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get()
+          : await _db.collection('jobs').get();
 
       print(query);
       for (var doc in query.docs) {

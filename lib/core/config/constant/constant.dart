@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/features/company/models/category.dart';
 
 const Color blue = Color(0xff3D5DF8);
-const Color lightBlue = Color(0xff0C1332);
+// const Color lightBlue = Color(0xff0C1332);
 
 
 // const Color darkPurple = Color.fromARGB(255, 236, 189, 31);
