@@ -15,10 +15,10 @@ class JobSeekerModel extends Equatable {
   final String email;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
-  final String password;
+  final String? password;
   final String location;
 
-  final String aboutYou;
+  final String summary;
   final List<String>? certificates;
   final List<String>? skills;
   @JsonKey(name: 'soft_skills')
@@ -34,7 +34,7 @@ class JobSeekerModel extends Equatable {
     required this.email,
     required this.password,
     required this.location,
-    required this.aboutYou,
+    required this.summary,
     this.certificates,
     this.skills,
     this.softSkills,
@@ -42,6 +42,16 @@ class JobSeekerModel extends Equatable {
     this.profilePicture,
     this.topicsSubscription,
   });
+
+  Map<String, dynamic> getInfo() {
+    return {
+      'name': name,
+      'phone_number': phoneNumber,
+      'email': email,
+      'profile_picture': profilePicture,
+      'location': location
+    };
+  }
 
   factory JobSeekerModel.fromJson(Map<String, dynamic> json) => _$JobSeekerModelFromJson(json);
   Map<String, dynamic> toJson() => _$JobSeekerModelToJson(this);
@@ -58,7 +68,7 @@ class JobSeekerModel extends Equatable {
     String? profilePicture,
     String? password,
     String? location,
-    String? aboutYou,
+    String? summary,
     List<String>? certificates,
     List<String>? skills,
     List<String>? softSkills,
@@ -73,7 +83,7 @@ class JobSeekerModel extends Equatable {
       profilePicture: profilePicture ?? this.profilePicture,
       password: password ?? this.password,
       location: location ?? this.location,
-      aboutYou: aboutYou ?? this.aboutYou,
+      summary: summary ?? this.summary,
       certificates: certificates ?? this.certificates,
       skills: skills ?? this.skills,
       softSkills: softSkills ?? this.softSkills,
@@ -91,7 +101,7 @@ class JobSeekerModel extends Equatable {
         profilePicture,
         password,
         location,
-        aboutYou,
+        summary,
         languages,
         skills,
         softSkills,

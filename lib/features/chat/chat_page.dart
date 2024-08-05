@@ -9,6 +9,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,12 +32,14 @@ class _ChatPageState extends State<ChatPage> {
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
+      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       builder: (BuildContext context) => SafeArea(
         child: SizedBox(
-          height: 144,
+          height: 160,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -44,7 +47,20 @@ class _ChatPageState extends State<ChatPage> {
                 },
                 child: const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Photo'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Photo',
+                        style: meduimTextStyle,
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.photo,
+                        color: white,
+                      )
+                    ],
+                  ),
                 ),
               ),
               TextButton(
@@ -54,14 +70,30 @@ class _ChatPageState extends State<ChatPage> {
                 },
                 child: const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('File'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'File',
+                        style: meduimTextStyle,
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.file_present_rounded,
+                        color: white,
+                      )
+                    ],
+                  ),
                 ),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: smallTextStyle,
+                  ),
                 ),
               ),
             ],
@@ -202,8 +234,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           // systemOverlayStyle: SystemUiOverlayStyle.light,
-          title: const Text('الدرشة'),
+          title: Text(widget.room.name ?? 'الدردشة'),
         ),
+        backgroundColor: background,
         body: StreamBuilder<types.Room>(
           initialData: widget.room,
           stream: FirebaseChatCore.instance.room(widget.room.id),
@@ -217,6 +250,19 @@ class _ChatPageState extends State<ChatPage> {
               onMessageTap: _handleMessageTap,
               onPreviewDataFetched: _handlePreviewDataFetched,
               onSendPressed: _handleSendPressed,
+              theme: DarkChatTheme(
+                  backgroundColor: background,
+                  inputBackgroundColor: const Color.fromARGB(255, 31, 31, 31),
+                  primaryColor: blue,
+                  secondaryColor: purple,
+                  attachmentButtonIcon: Container(
+                    // padding: const EdgeInsets.all(10),
+                    // decoration: BoxDecoration(color: background, borderRadius: BorderRadius.circular(10)),
+                    child: const Icon(
+                      Icons.attachment_outlined,
+                      color: white,
+                    ),
+                  )),
               user: types.User(
                 id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
               ),

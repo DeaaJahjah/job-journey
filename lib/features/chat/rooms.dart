@@ -64,7 +64,7 @@ class _RoomsPageState extends State<RoomsPage> {
       child: CircleAvatar(
         backgroundColor: hasImage ? Colors.transparent : color,
         backgroundImage: hasImage ? NetworkImage(room.imageUrl!) : null,
-        radius: 20,
+        radius: 25,
         child: !hasImage
             ? Text(
                 name.isEmpty ? '' : name[0].toUpperCase(),
@@ -94,7 +94,7 @@ class _RoomsPageState extends State<RoomsPage> {
           // systemOverlayStyle: SystemUiOverlayStyle.light,
           title: const Text('الدردشات'),
           centerTitle: true,
-          backgroundColor: blue,
+          // backgroundColor: blue,
           elevation: 0.0,
         ),
         body: Container(
@@ -131,12 +131,13 @@ class _RoomsPageState extends State<RoomsPage> {
                           ),
                         );
                       },
-                      child: Container(
-                        child: Card(
+                      child: Card(
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        color: const Color.fromARGB(255, 31, 31, 31),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
-                              vertical: 8,
+                            vertical: 12,
                             ),
                             child: Row(
                               children: [
@@ -144,12 +145,16 @@ class _RoomsPageState extends State<RoomsPage> {
                                 const SizedBox(
                                   width: 30,
                                 ),
-                                Text(room.name ?? ''),
+                              Text(
+                                room.name ?? '',
+                                style: largTextStyle,
+                              ),
                               ],
                             ),
                           ),
+                          
                         ),
-                      ),
+                     
                     );
                   },
                 );

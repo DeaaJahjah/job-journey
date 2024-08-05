@@ -45,7 +45,19 @@
     "languages": "اللغات",
     "skills": "المهارات",
     "softSkills": "المهارات الناعمة",
-    "notifications": "الإشعارات",
+"applyMessage": "يمكنك التقديم الى الوظيفة من خلال ارسال معلوماتك  المهنية المدخلة مسبقاً في ملفك الشخصي",
+    "or": "أو",
+    "sendYourProfile": "ارسال ملفك الشخصي",
+    "generateCv": "توليد سيرة ذاتية",
+    "address": "العنوان",
+    "personalSummary": "الملخص الشخصي",
+    "errorSendingResume": "حدث خطأ عند ارسال السيرة الذاتية",
+    "resumeSentSuccessfully": "تم ارسال السيرة الذاتية بنجاح",
+    "resumeCopied": "تم نسخ السيرة الذاتية",
+    "createResume": "انشئ سيرة ذاتية",
+    "translateToArabic": "ترجمة إلى العربية",
+    "translateToEnglish": "ترجمة إلى الانكليزية"
+"notifications": "الإشعارات",
     "applications": "الطلبات المقدمة",
     "address": "العنوان",
     "personalSummary": "الملخص الشخصي",
@@ -57,4 +69,5 @@
     "topicsSubscription": "الإهتمامات",
     "selectTopicsOfYourInterest": "حدد المجالات المهتم بها لتصلك اشعارات بفرص العمل الجديدة",
     "save": "حفظ"
+
 }

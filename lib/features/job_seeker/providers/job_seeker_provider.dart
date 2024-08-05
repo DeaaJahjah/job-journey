@@ -5,18 +5,14 @@ import 'package:job_journey/features/job_seeker/services/job_seeker_db_serviec.d
 
 class JobSeekerProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
-  JobSeekerModel? profile;
+
+  JobSeekerModel? jobSeekerModel;
   Future<void> addJobSeeker({required JobSeekerModel user}) async {
     dataState = DataState.loading;
     notifyListeners();
     final jobs = await JobSeekerDbServiec().addJobSeeker(user: user);
-    if (jobs == null) {
-      dataState = DataState.failure;
-      notifyListeners();
-    } else {
-      dataState = DataState.done;
-      notifyListeners();
-    }
+    dataState = DataState.done;
+    notifyListeners();
   }
 
   Future<void> updateJobSeeker({required JobSeekerModel user}) async {
@@ -27,6 +23,21 @@ class JobSeekerProvider with ChangeNotifier {
       dataState = DataState.failure;
       notifyListeners();
     } else {
+      dataState = DataState.done;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getJobSeeker({required String userId}) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final result = await JobSeekerDbServiec().getJobSeeker(userId: userId);
+    if (result == null) {
+      dataState = DataState.failure;
+      notifyListeners();
+    } else {
+      jobSeekerModel = result;
+      print('jobSeekerModel ${jobSeekerModel!.toJson()}');
       dataState = DataState.done;
       notifyListeners();
     }

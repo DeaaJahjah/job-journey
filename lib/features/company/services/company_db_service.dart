@@ -45,21 +45,21 @@ class CompanyDbServiec {
 
       return addedJob;
     } catch (e) {
-      print('catche errororororo$e');
+      print('catche errororororo $e');
       return null;
     }
   }
 
-  Future<CompanyModel?> createCompany({required CompanyModel company}) async {
+  Future<bool> createCompany({required CompanyModel company}) async {
     try {
-      var doc = await _db.collection('companies').add(company.toJson());
+      await _db.collection('companies').doc(company.id).set(company.toJson());
 
-      final cc = company.copyWith(id: doc.id);
+      // final cc = company.copyWith(id: doc.id);
 
-      return cc;
+      return true;
     } catch (e) {
-      print('catche errororororo$e');
-      return null;
+      print('catche errororororo $e');
+      return false;
     }
   }
 

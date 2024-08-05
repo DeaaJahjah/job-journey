@@ -55,6 +55,7 @@ dependencies:
   equatable: ^2.0.3
 
   flutter_svg: 
+  flutter_animate:
   #json
   json_annotation: ^4.4.0 
 

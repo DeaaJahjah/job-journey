@@ -221,7 +221,6 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
 
                           if (imageFile != null) {
                             imageUrl = await FileDbService().uploadeimage(fileName, imageFile!, context);
-                            context.firebaseUser!.updatePhotoURL(imageUrl);
                           }
 
                           await FirebaseChatCore.instance.createUserInFirestore(
@@ -235,6 +234,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           //TODO:: create company
                           await comProvider.createCompany(
                               company: CompanyModel(
+                                  id: context.firebaseUser!.uid,
                                   name: userName.text,
                                   phoneNumber: phoneController.text,
                                   profilePicture: imageUrl,

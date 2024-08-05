@@ -253,12 +253,13 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
 
                           await context.read<JobSeekerProvider>().addJobSeeker(
                                   user: JobSeekerModel(
+                                id: context.firebaseUser!.uid,
                                 name: userName.text,
                                 phoneNumber: phoneController.text,
                                 email: email.text,
                                 password: passwordController.text,
                                 location: location.text,
-                                aboutYou: description.text,
+                                summary: description.text,
                                 profilePicture: imageUrl,
                                 certificates: certificates.text.split('-'),
                                 languages: languages.text.split('-'),

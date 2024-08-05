@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
-import 'package:job_journey/features/company/services/company_db_serviec.dart';
+import 'package:job_journey/features/company/services/company_db_service.dart';
 
 class CompanyProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
