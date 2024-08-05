@@ -33,7 +33,6 @@ class JobSeekerProvider with ChangeNotifier {
     notifyListeners();
     final result = await JobSeekerDbServiec().getJobSeeker(userId: userId);
     if (result == null) {
-
       dataState = DataState.failure;
       notifyListeners();
     } else {

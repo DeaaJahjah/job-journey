@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/company/services/company_db_service.dart';
 
@@ -7,6 +8,7 @@ class CompanyProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
   List<JobModel> myJobs = [];
   JobModel? jobDetails;
+  CompanyModel? profile;
 
   Future<void> getJobs() async {
     dataState = DataState.loading;
@@ -51,5 +53,20 @@ class CompanyProvider with ChangeNotifier {
       dataState = DataState.done;
     }
     notifyListeners();
+  }
+
+  Future<void> getCompanyProfile({required String userId}) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final result = await CompanyDbServiec().getCompanyProfile(userId: userId);
+    if (result == null) {
+      dataState = DataState.failure;
+      notifyListeners();
+    } else {
+      profile = result;
+      print('company ${profile!.toJson()}');
+      dataState = DataState.done;
+      notifyListeners();
+    }
   }
 }

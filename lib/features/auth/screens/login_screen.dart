@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
@@ -8,7 +9,10 @@ import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/auth/screens/selecte_account_type_screen.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -63,7 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       isLoading
                           ? const CustomProgress()
                           : ElevatedButtonCustom(
-                             
                               textColor: white,
                               text: context.loc.login,
                               onPressed: () async {
@@ -91,6 +94,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   isLoading = false;
                                 });
                                 if (result != null) {
+                                  if (context.firebaseUser!.photoURL != 'company') {
+                                    await context
+                                        .read<JobSeekerProvider>()
+                                        .getJobSeeker(userId: context.firebaseUser!.uid);
+                                  } else {
+                                    await context
+                                        .read<CompanyProvider>()
+                                        .getCompanyProfile(userId: context.firebaseUser!.uid);
+                                  }
                                   Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
                                 }
                               }),

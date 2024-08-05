@@ -160,7 +160,6 @@ class _AddJobScreenState extends State<AddJobScreen> {
                   builder: (_, provider, __) => provider.dataState == DataState.loading
                       ? const CustomProgress()
                       : ElevatedButtonCustom(
-                         
                           textColor: white,
                           text: context.loc.add,
                           onPressed: () async {
@@ -168,6 +167,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                             if (isValid && selectedCategory != null && selectedCity != null && selectedType != null) {
                               final JobModel job = JobModel(
                                   id: '',
+                                  createdAt: DateTime.now().toIso8601String(),
                                   title: titleController.text,
                                   description: descriptionController.text,
                                   location: selectedCity!,
@@ -188,16 +188,16 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                   salary: double.parse(salaryController.text),
                                   companyId: context.userUid!,
                                   companyName: context.firebaseUser!.displayName!);
-                              provider.addJob(job).then((_) {
+                              await provider.addJob(job).then((_) {
                                 if (provider.dataState == DataState.failure) {
-                                  showErrorSnackBar(context, 'حدث خطأ ما');
+                                  showErrorSnackBar(context, context.loc.somethingWentWrong);
                                   return;
                                 }
-                                showSuccessSnackBar(context, 'تمت إضافة الوظيفة بنجاح');
+                                showSuccessSnackBar(context, context.loc.jobAddedSuccessfully);
                                 Navigator.of(context).pop();
                               });
                             } else {
-                              showErrorSnackBar(context, 'بعض الحقول مطلوبة يرجى التحقق منها');
+                              showErrorSnackBar(context, context.loc.someFieldAreRequired);
                             }
                           },
                         ),

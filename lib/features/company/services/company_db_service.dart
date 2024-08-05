@@ -41,7 +41,6 @@ class CompanyDbServiec {
   Future<JobModel?> addJob({required JobModel job}) async {
     try {
       var doc = await _db.collection('jobs').add(job.toJson());
-
       final addedJob = job.copyWith(id: doc.id);
 
       return addedJob;
@@ -72,6 +71,17 @@ class CompanyDbServiec {
     } catch (e) {
       print('catche errororororo$e');
       return false;
+    }
+  }
+
+  Future<CompanyModel?> getCompanyProfile({required userId}) async {
+    try {
+      var doc = await _db.collection('companies').doc(userId).get();
+
+      return CompanyModel.fromFirestore(doc);
+    } catch (e) {
+      print('catche errororororo $e');
+      return null;
     }
   }
 }

@@ -5,7 +5,9 @@ import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
+import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/custom_drawer.dart';
+import 'package:job_journey/features/applications/screens/applications_screen.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
@@ -37,9 +39,7 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
       backgroundColor: background,
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        toolbarHeight: 90,
         title: Text(context.loc.jobs),
-        
       ),
       body: Consumer<CompanyProvider>(builder: (context, provider, _) {
         final jobs = provider.myJobs;
@@ -61,16 +61,15 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
                 },
               );
       }),
-      
       floatingActionButton: !context.isCompanyAccount
           ? null
           : FloatingActionButton(
-        backgroundColor: blue,
-        onPressed: () {
-          Navigator.of(context).pushNamed(AddJobScreen.routeName);
-        },
-        child: const Icon(Icons.add, color: background),
-      ),
+              backgroundColor: blue,
+              onPressed: () {
+                Navigator.of(context).pushNamed(AddJobScreen.routeName);
+              },
+              child: const Icon(Icons.add, color: background),
+            ),
     );
   }
 }
@@ -111,7 +110,7 @@ class JobCard extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
                       child: Image.network(
-                        "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305", //job.companyPicture!,
+                        "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg",
                         height: 75,
                       ),
                     ),
@@ -299,6 +298,22 @@ class JobCard extends StatelessWidget {
                 ],
               ),
             ),
+            sizedBoxSmall,
+            if (job.companyId == context.firebaseUser!.uid)
+              Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: ElevatedButtonCustom(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ApplicationsScreen.routeName, arguments: job.id);
+                },
+                text: context.loc.applications,
+                textColor: white,
+                // ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),

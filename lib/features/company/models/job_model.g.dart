@@ -13,22 +13,17 @@ JobModel _$JobModelFromJson(Map<String, dynamic> json) => JobModel(
       location: json['location'] as String,
       category: Category.fromJson(json['category'] as Map<String, dynamic>),
       jobType: json['job_type'] as String,
-      requirements: (json['requirements'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      requiredDocuments: (json['required_documents'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      requirements: (json['requirements'] as List<dynamic>).map((e) => e as String).toList(),
+      requiredDocuments: (json['required_documents'] as List<dynamic>).map((e) => e as String).toList(),
       experienceLevel: json['experience_level'] as String,
       salary: (json['salary'] as num).toDouble(),
       companyId: json['company_id'] as String,
       companyName: json['company_name'] as String,
-      benefits: (json['benefits'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      benefits: (json['benefits'] as List<dynamic>?)?.map((e) => e as String).toList(),
       companyPicture: json['company_picture'] as String?,
       additionalInfo: json['additional_info'] as String?,
       applicationDeadline: json['application_deadline'] as String?,
+      createdAt: json['created_at'] as String,
     );
 
 Map<String, dynamic> _$JobModelToJson(JobModel instance) => <String, dynamic>{
@@ -48,4 +43,5 @@ Map<String, dynamic> _$JobModelToJson(JobModel instance) => <String, dynamic>{
       'company_id': instance.companyId,
       'company_name': instance.companyName,
       'company_picture': instance.companyPicture,
+      'created_at': instance.createdAt
     };

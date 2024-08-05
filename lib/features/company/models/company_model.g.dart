@@ -19,8 +19,7 @@ CompanyModel _$CompanyModelFromJson(Map<String, dynamic> json) => CompanyModel(
       profilePicture: json['profile_picture'] as String?,
     );
 
-Map<String, dynamic> _$CompanyModelToJson(CompanyModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CompanyModelToJson(CompanyModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'phone_number': instance.phoneNumber,

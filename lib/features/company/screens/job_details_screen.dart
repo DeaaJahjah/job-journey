@@ -61,7 +61,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               ),
               background: Hero(
                 tag: job.id,
-                child: job.companyPicture != null
+                child: job.companyPicture != null || job.companyPicture == 'company'
                     ? Stack(
                         children: [
                           Positioned.fill(
@@ -82,13 +82,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305"),
+                                    "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg"),
                                 fit: BoxFit.cover)),
                         child: Container(
                           color: Colors.black54,
                         ),
                       ),
               ),
+              centerTitle: true,
             ),
             centerTitle: true,
             // automaticallyImplyLeading: false,

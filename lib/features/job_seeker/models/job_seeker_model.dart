@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:job_journey/features/company/models/category.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'job_seeker_model.g.dart';
@@ -24,14 +25,13 @@ class JobSeekerModel extends Equatable {
   final List<String>? softSkills;
   final List<String>? languages;
   @JsonKey(name: 'topics_subscription')
-  final List<String>? topicsSubscription;
+  final List<Category>? topicsSubscription;
 
   const JobSeekerModel({
     this.id,
     required this.name,
     required this.phoneNumber,
     required this.email,
-    this.profilePicture,
     required this.password,
     required this.location,
     required this.summary,
@@ -39,6 +39,7 @@ class JobSeekerModel extends Equatable {
     this.skills,
     this.softSkills,
     this.languages,
+    this.profilePicture,
     this.topicsSubscription,
   });
 
@@ -54,13 +55,11 @@ class JobSeekerModel extends Equatable {
 
   factory JobSeekerModel.fromJson(Map<String, dynamic> json) => _$JobSeekerModelFromJson(json);
   Map<String, dynamic> toJson() => _$JobSeekerModelToJson(this);
-
   factory JobSeekerModel.fromFirestore(DocumentSnapshot documentSnapshot) {
-    JobSeekerModel user = JobSeekerModel.fromJson(documentSnapshot.data() as Map<String, dynamic>);
-    user = user.copyWith(id: documentSnapshot.id);
-    return user;
+    JobSeekerModel jobSeeker = JobSeekerModel.fromJson(documentSnapshot.data() as Map<String, dynamic>);
+    jobSeeker = jobSeeker.copyWith(id: documentSnapshot.id);
+    return jobSeeker;
   }
-
   JobSeekerModel copyWith({
     String? id,
     String? name,
@@ -74,7 +73,7 @@ class JobSeekerModel extends Equatable {
     List<String>? skills,
     List<String>? softSkills,
     List<String>? languages,
-    List<String>? topicsSubscription,
+    List<Category>? topicsSubscription,
   }) {
     return JobSeekerModel(
       id: id ?? this.id,

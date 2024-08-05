@@ -14,7 +14,9 @@ import 'package:job_journey/core/services/file_services.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/company/models/company_model.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
@@ -200,6 +202,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           setState(() {
                             isLoading = true;
                           });
+                          final comProvider = context.read<CreateUpdateCompanyProvider>();
 
                           final re = await FlutterFireAuthServices()
                               .signUp(email: email.text, password: passwordController.text, context: context);
@@ -210,6 +213,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                             });
                             return;
                           }
+
                           context.firebaseUser!.updateDisplayName(userName.text);
 
                           //set user type
@@ -230,8 +234,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           );
 
                           //TODO:: create company
-
-                          await context.read<CreateUpdateCompanyProvider>().createCompany(
+                          await comProvider.createCompany(
                               company: CompanyModel(
                                   id: context.firebaseUser!.uid,
                                   name: userName.text,
@@ -246,6 +249,13 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           setState(() {
                             isLoading = false;
                           });
+
+                          if (context.firebaseUser!.photoURL != 'company') {
+                            await context.read<JobSeekerProvider>().getJobSeeker(userId: context.firebaseUser!.uid);
+                          } else {
+                            await context.read<CompanyProvider>().getCompanyProfile(userId: context.firebaseUser!.uid);
+                          }
+
                           Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
                         } else {
                           var snackBar = const SnackBar(content: Text('جميع الحقول مطلوبة'));

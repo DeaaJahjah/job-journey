@@ -32,7 +32,6 @@ class CompanyModel extends Equatable {
     required this.description,
     required this.foundingDate,
     this.profilePicture,
-  
   });
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) => _$CompanyModelFromJson(json);
@@ -54,7 +53,6 @@ class CompanyModel extends Equatable {
         description,
         foundingDate,
         profilePicture,
-
       ];
 
   CompanyModel copyWith({
@@ -80,7 +78,6 @@ class CompanyModel extends Equatable {
       password: password ?? this.password,
       industry: industry ?? this.industry,
       location: location ?? this.location,
-      
       description: description ?? this.description,
       foundingDate: foundingDate ?? this.foundingDate,
     );
