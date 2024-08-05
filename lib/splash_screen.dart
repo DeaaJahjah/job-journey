@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/features/auth/screens/login_screen.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,13 +20,14 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('user type :${context.firebaseUser!.photoURL}');
     Timer(const Duration(seconds: 3), () async {
       if (context.firebaseUser != null) {
+        // print('user type :${context.firebaseUser!.photoURL}');
+        print('firebaseUse ${context.firebaseUser!.photoURL}');
         if (context.firebaseUser!.photoURL != 'company') {
           await context.read<JobSeekerProvider>().getJobSeeker(userId: context.firebaseUser!.uid);
         } else {
-          //TODO:get company profile
+          await context.read<CompanyProvider>().getCompanyProfile(userId: context.firebaseUser!.uid);
         }
       }
       if (context.firebaseUser != null) {

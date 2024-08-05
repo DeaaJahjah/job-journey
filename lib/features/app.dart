@@ -54,6 +54,7 @@ class App extends StatelessWidget {
                 backgroundColor: background,
                 foregroundColor: white,
                 centerTitle: true,
+                toolbarHeight: 50,
                 titleTextStyle: appBarTextStyle),
             fontFamily: font),
         initialRoute: '/',

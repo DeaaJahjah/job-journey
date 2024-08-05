@@ -19,7 +19,6 @@ class NotificationsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: background,
-        toolbarHeight: 90,
         elevation: 0,
         title: Text(context.loc.notifications),
       ),

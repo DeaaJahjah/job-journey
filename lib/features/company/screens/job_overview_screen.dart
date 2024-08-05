@@ -39,7 +39,6 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
       backgroundColor: background,
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        toolbarHeight: 90,
         title: Text(context.loc.jobs),
       ),
       body: Consumer<CompanyProvider>(builder: (context, provider, _) {
@@ -300,7 +299,8 @@ class JobCard extends StatelessWidget {
               ),
             ),
             sizedBoxSmall,
-            Padding(
+            if (job.companyId == context.firebaseUser!.uid)
+              Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: ElevatedButtonCustom(
                 onPressed: () {

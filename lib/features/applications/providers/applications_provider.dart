@@ -10,6 +10,7 @@ class ApplicationsProvider with ChangeNotifier {
   void listenToApplications({required String jobId}) {
     FirebaseFirestore.instance.collection('/jobs/$jobId/applications').orderBy('created_at').snapshots().listen(
         onError: (e) {
+          print(e);
           dataState = DataState.failure;
           notifyListeners();
         },
@@ -18,6 +19,8 @@ class ApplicationsProvider with ChangeNotifier {
           final applications = event.docs.map((snapshot) => JobSeekerModel.fromFirestore(snapshot)).toList();
           this.applications = applications;
           dataState = DataState.done;
+          print(applications);
+
           notifyListeners();
         });
   }

@@ -34,7 +34,6 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 90,
         backgroundColor: background,
         elevation: 0,
         title: Text(context.loc.applications),
@@ -127,7 +126,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(color: white),
                                   ),
                                   Text(
-                                    application.aboutYou,
+                                    application.summary,
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
                                   )
                                 ],

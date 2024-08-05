@@ -29,13 +29,13 @@ class JobSeekerDbServiec {
 
   Future<JobSeekerModel?> getJobSeeker({required userId}) async {
     print('userId: $userId');
-    // try {
+    try {
     var doc = await _db.collection('JobSeekers').doc(userId).get();
 
     return JobSeekerModel.fromFirestore(doc);
-    // } catch (e) {
-    //   print('catche errororororo$e');
-    //   return null;
-    // }
+    } catch (e) {
+      print('catche errororororo$e');
+      return null;
+    }
   }
 }

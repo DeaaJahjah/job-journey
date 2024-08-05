@@ -11,6 +11,7 @@ import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/core/services/file_services.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
@@ -269,6 +270,11 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
                           setState(() {
                             isLoading = false;
                           });
+                          if (context.firebaseUser!.photoURL != 'company') {
+                            await context.read<JobSeekerProvider>().getJobSeeker(userId: context.firebaseUser!.uid);
+                          } else {
+                            await context.read<CompanyProvider>().getCompanyProfile(userId: context.firebaseUser!.uid);
+                          }
                           Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
                         } else {
                           var snackBar = const SnackBar(content: Text('جميع الحقول مطلوبة'));

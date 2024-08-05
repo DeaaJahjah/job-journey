@@ -1,7 +1,7 @@
+import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
-import 'package:filter_list/filter_list.dart';
 import 'package:job_journey/features/company/models/category.dart';
 
 class TopicsSubscriptionScreen extends StatelessWidget {
@@ -13,7 +13,6 @@ class TopicsSubscriptionScreen extends StatelessWidget {
     // final selectedTopics = ModalRoute.of(context)!.settings.arguments as List<Category>;
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
         title: Text(context.loc.topicsSubscription),
       ),
       body: ListView(
@@ -34,7 +33,7 @@ class TopicsSubscriptionScreen extends StatelessWidget {
               hideSelectedTextCount: true,
               backgroundColor: background,
 
-              selectedListData: [], // selectedTopics,
+              selectedListData: const [], // selectedTopics,
               choiceChipBuilder: (context, item, isSelected) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   margin: const EdgeInsets.all(8),

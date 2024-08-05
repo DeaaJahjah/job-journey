@@ -31,7 +31,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
         if (provider.dataState == DataState.loading) {
           return const CustomProgress();
         }
-        if (provider.profile == null) {
+        if (provider.jobSeekerModel == null) {
           return Center(
             child: Text(
               context.loc.noData,
@@ -39,7 +39,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
             ),
           );
         }
-        final profile = provider.profile!;
+        final profile = provider.jobSeekerModel!;
         return SafeArea(
           child: CustomScrollView(slivers: <Widget>[
             SliverAppBar(
@@ -178,7 +178,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
                         child: Text(
-                          profile.aboutYou,
+                          profile.summary,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
                         ),
                       ),

@@ -54,4 +54,19 @@ class CompanyProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> getCompanyProfile({required String userId}) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final result = await CompanyDbServiec().getCompanyProfile(userId: userId);
+    if (result == null) {
+      dataState = DataState.failure;
+      notifyListeners();
+    } else {
+      profile = result;
+      print('company ${profile!.toJson()}');
+      dataState = DataState.done;
+      notifyListeners();
+    }
+  }
 }

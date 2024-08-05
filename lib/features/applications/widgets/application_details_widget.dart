@@ -68,7 +68,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white),
           ),
           Text(
-            application.aboutYou,
+            application.summary,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
           ),
           sizedBoxSmall,
