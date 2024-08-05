@@ -23,7 +23,7 @@ class ElevatedButtonCustom extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8),
           height: 50,
-          height: 50,
+          
           // width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

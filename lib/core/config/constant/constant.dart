@@ -14,8 +14,6 @@ const Color white = Color(0xffffffff);
 const Color lightBlue = Color.fromARGB(255, 124, 145, 250);
 const Color gray = Color.fromARGB(255, 224, 223, 223);
 const Color brown = Color(0XFF2E2D2D);
-const Color lightpurple = Color(0XFF9869BD);
-const Color purple = Color(0XFF8B16E4);
 const String font = 'Tajawal';
 
 const TextStyle smallTextStyle = TextStyle(color: white, fontFamily: font, fontSize: 12);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
-import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/chat/rooms.dart';
-import 'package:job_journey/features/company/screens/company_profile_screen.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -67,10 +67,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.interests_rounded, color: white),
-            title: Text(context.loc.topicsSubscription, style: meduimTextStyle),
+            leading: const Icon(Icons.favorite, color: white),
+            title: const Text('المفضلة', style: meduimTextStyle),
             onTap: () {
-              Navigator.of(context).pushNamed(TopicsSubscriptionScreen.routeName);
+              // Navigator.of(context).pushNamed(FavouriteScreen.routeName);
               // Handle my favorites action
             },
           ),
