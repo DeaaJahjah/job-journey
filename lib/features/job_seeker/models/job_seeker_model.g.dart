@@ -6,25 +6,23 @@ part of 'job_seeker_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-JobSeekerModel _$JobSeekerModelFromJson(Map<String, dynamic> json) =>
-    JobSeekerModel(
+JobSeekerModel _$JobSeekerModelFromJson(Map<String, dynamic> json) => JobSeekerModel(
       id: json['id'] as String?,
       name: json['name'] as String,
       phoneNumber: json['phone_number'] as String,
       email: json['email'] as String,
       profilePicture: json['profile_picture'] as String?,
-      password: json['password'] as String,
+      password: json['password'] == null ? '' : json['password'] as String,
       location: json['location'] as String,
-      aboutYou: json['aboutYou'] as String,
+      aboutYou: json['aboutYou'] == null ? '' : json['aboutYou'] as String,
       certificates: (json['certificates'] as List<dynamic>?)?.map((e) => e as String).toList(),
       skills: (json['skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       softSkills: (json['soft_skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       languages: (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      topicsSubscription: (json['topics_subscription'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      topicsSubscription: (json['topics_subscription'] as List<dynamic>?)?.map((e) => Category.fromJson(e)).toList(),
     );
 
-Map<String, dynamic> _$JobSeekerModelToJson(JobSeekerModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$JobSeekerModelToJson(JobSeekerModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'phone_number': instance.phoneNumber,
@@ -37,5 +35,5 @@ Map<String, dynamic> _$JobSeekerModelToJson(JobSeekerModel instance) =>
       'skills': instance.skills,
       'soft_skills': instance.softSkills,
       'languages': instance.languages,
-      'topics_subscription': instance.topicsSubscription,
+      'topics_subscription': instance.topicsSubscription?.map((e) => e.toJson()).toList(),
     };

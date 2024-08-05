@@ -51,7 +51,6 @@ class _SelectAccountTypeScreenState extends State<SelectAccountTypeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: ElevatedButtonCustom(
-                color: white,
                 textColor: white,
                 onPressed: () {
                   if (selectedType == 1) {

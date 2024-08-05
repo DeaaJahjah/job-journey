@@ -204,7 +204,6 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
               ),
               !isLoading
                   ? ElevatedButtonCustom(
-                      color: blue,
                       textColor: white,
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {

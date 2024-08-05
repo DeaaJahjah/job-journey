@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:job_journey/features/company/models/category.dart';
@@ -32,23 +31,27 @@ class JobModel extends Equatable {
   final String companyName;
   @JsonKey(name: 'company_picture')
   final String? companyPicture;
-  const JobModel(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.location,
-      required this.category,
-      required this.jobType,
-      required this.requirements,
-      required this.requiredDocuments,
-      required this.experienceLevel,
-      required this.salary,
-      required this.companyId,
-      required this.companyName,
-      this.benefits,
-      this.companyPicture,
-      this.additionalInfo,
-      this.applicationDeadline});
+  @JsonKey(name: 'created_at')
+  final String createdAt;
+  const JobModel({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.location,
+    required this.category,
+    required this.jobType,
+    required this.requirements,
+    required this.requiredDocuments,
+    required this.experienceLevel,
+    required this.salary,
+    required this.companyId,
+    required this.companyName,
+    required this.createdAt,
+    this.benefits,
+    this.companyPicture,
+    this.additionalInfo,
+    this.applicationDeadline,
+  });
 
   factory JobModel.fromJson(Map<String, dynamic> json) => _$JobModelFromJson(json);
   Map<String, dynamic> toJson() => _$JobModelToJson(this);
@@ -75,6 +78,7 @@ class JobModel extends Equatable {
     String? companyId,
     String? companyName,
     String? companyPicture,
+    String? createdAt,
   }) {
     return JobModel(
       id: id ?? this.id,
@@ -93,6 +97,7 @@ class JobModel extends Equatable {
       companyId: companyId ?? this.companyId,
       companyName: companyName ?? this.companyName,
       companyPicture: companyPicture ?? this.companyPicture,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -114,5 +119,6 @@ class JobModel extends Equatable {
         companyPicture,
         additionalInfo,
         applicationDeadline,
+        createdAt
       ];
 }

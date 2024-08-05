@@ -11,7 +11,6 @@ class CompanyDbServiec {
     try {
       List<JobModel> jobs = [];
 
-                  
       var query = userType == 'company'
           ? await _db.collection('jobs').where('company_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get()
           : await _db.collection('jobs').get();
@@ -42,7 +41,6 @@ class CompanyDbServiec {
   Future<JobModel?> addJob({required JobModel job}) async {
     try {
       var doc = await _db.collection('jobs').add(job.toJson());
-
       final addedJob = job.copyWith(id: doc.id);
 
       return addedJob;

@@ -186,7 +186,6 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
               ),
               !isLoading
                   ? ElevatedButtonCustom(
-                      color: blue,
                       textColor: white,
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
@@ -201,6 +200,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           setState(() {
                             isLoading = true;
                           });
+                          final comProvider = context.read<CreateUpdateCompanyProvider>();
 
                           final re = await FlutterFireAuthServices()
                               .signUp(email: email.text, password: passwordController.text, context: context);
@@ -211,6 +211,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                             });
                             return;
                           }
+
                           context.firebaseUser!.updateDisplayName(userName.text);
 
                           //set user type
@@ -232,8 +233,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           );
 
                           //TODO:: create company
-
-                          await context.read<CreateUpdateCompanyProvider>().createCompany(
+                          await comProvider.createCompany(
                               company: CompanyModel(
                                   name: userName.text,
                                   phoneNumber: phoneController.text,

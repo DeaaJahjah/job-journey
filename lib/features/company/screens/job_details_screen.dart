@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/chat_button.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
+import 'package:job_journey/features/applications/screens/applications_screen.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 
 class JobDetailsScreen extends StatefulWidget {
@@ -53,7 +56,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               ),
               background: Hero(
                 tag: job.id,
-                child: job.companyPicture != null
+                child: job.companyPicture != null || job.companyPicture == 'company'
                     ? Stack(
                         children: [
                           Positioned.fill(
@@ -74,13 +77,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/company-logo-design-template-e089327a5c476ce5c70c74f7359c5898_screen.jpg?ts=1672291305"),
+                                    "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg"),
                                 fit: BoxFit.cover)),
                         child: Container(
                           color: Colors.black54,
                         ),
                       ),
               ),
+              centerTitle: true,
             ),
             centerTitle: true,
             // automaticallyImplyLeading: false,
@@ -182,22 +186,16 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Row(
                           children: [
-                            Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: blue), borderRadius: BorderRadius.circular(10)),
-                              child: const GradientIcon(
-                                offset: Offset.zero,
-                                gradient: LinearGradient(colors: [lightBlue, blue]),
-                                icon: Icons.chat,
-                              ),
-                            ),
+                            if (!context.isCompanyAccount) ChatButton(onTap: () {}),
                             const SizedBox(width: 10),
                             Expanded(
                               child: ElevatedButtonCustom(
-                                onPressed: () {},
-                                text: context.loc.applyForJob,
+                                onPressed: () {
+                                  if (context.isCompanyAccount) {
+                                    Navigator.of(context).pushNamed(ApplicationsScreen.routeName, arguments: job.id);
+                                  }
+                                },
+                                text: context.isCompanyAccount ? context.loc.applications : context.loc.applyForJob,
                                 textColor: white,
                               ),
                             ),

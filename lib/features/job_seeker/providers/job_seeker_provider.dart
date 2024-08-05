@@ -5,7 +5,7 @@ import 'package:job_journey/features/job_seeker/services/job_seeker_db_serviec.d
 
 class JobSeekerProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
-
+  JobSeekerModel? profile;
   Future<void> addJobSeeker({required JobSeekerModel user}) async {
     dataState = DataState.loading;
     notifyListeners();

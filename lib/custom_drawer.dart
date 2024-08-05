@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
+import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/chat/rooms.dart';
 import 'package:job_journey/features/company/screens/company_profile_screen.dart';
+import 'package:job_journey/features/job_seeker/screens/job_seeker_profile_screen.dart';
+import 'package:job_journey/features/topicsSubscription/screens/topics_subscription_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -27,7 +30,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Navigator.of(context).pushNamed(CompanyProfileScreen.routeName);
                 return;
               }
-              // Navigator.of(context).pushNamed(JobSeekerProfileScreen.routeName);
+              Navigator.of(context).pushNamed(JobSeekerProfileScreen.routeName);
             },
             accountName: Text(context.firebaseUser!.displayName ?? 'لا يوجد', style: meduimTextStyle),
             accountEmail: Text(context.firebaseUser!.email ?? 'لا يوجد', style: meduimTextStyle),
@@ -73,10 +76,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.favorite, color: white),
-            title: const Text('المفضلة', style: meduimTextStyle),
+            leading: const Icon(Icons.interests_rounded, color: white),
+            title: Text(context.loc.topicsSubscription, style: meduimTextStyle),
             onTap: () {
-              // Navigator.of(context).pushNamed(FavouriteScreen.routeName);
+              Navigator.of(context).pushNamed(TopicsSubscriptionScreen.routeName);
               // Handle my favorites action
             },
           ),
