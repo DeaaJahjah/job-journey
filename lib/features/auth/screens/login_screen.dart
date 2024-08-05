@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       isLoading
                           ? const CustomProgress()
                           : ElevatedButtonCustom(
-                              color: blue,
+                             
                               textColor: white,
                               text: context.loc.login,
                               onPressed: () async {

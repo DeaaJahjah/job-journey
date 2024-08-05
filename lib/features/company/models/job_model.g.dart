@@ -36,7 +36,7 @@ Map<String, dynamic> _$JobModelToJson(JobModel instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'location': instance.location,
-      'category': instance.category,
+      'category': instance.category.toJson(),
       'job_type': instance.jobType,
       'requirements': instance.requirements,
       'benefits': instance.benefits,

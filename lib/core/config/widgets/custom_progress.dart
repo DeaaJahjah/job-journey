@@ -9,6 +9,7 @@ class CustomProgress extends StatelessWidget {
     return const Center(
         child: CircularProgressIndicator(
       color: blue,
+      
     ));
   }
 }

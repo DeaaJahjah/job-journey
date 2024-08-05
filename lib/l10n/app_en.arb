@@ -42,5 +42,17 @@
     "certificates": "Certificates",
     "languages": "Languages",
     "skills": "Skills",
-    "softSkills": "Soft Skills"
+    "softSkills": "Soft Skills",
+    "applyMessage": "You can apply for the job by submitting your professional information and necessary inputs in your profile.",
+    "or": "Or",
+    "sendYourProfile": "Send Your Profile",
+    "generateCv": "Generate CV",
+    "address": "Address",
+    "personalSummary": "Personal Summary",
+    "errorSendingResume": "Error Sending Resume",
+    "resumeSentSuccessfully": "Resume Sent Successfully",
+    "resumeCopied": "Resume Copied",
+    "createResume": "Create Resume",
+    "translateToArabic": "Translate to Arabic",
+    "translateToEnglish": "Translate to English"
 }

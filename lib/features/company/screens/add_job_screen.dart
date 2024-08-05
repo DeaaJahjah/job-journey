@@ -160,7 +160,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                   builder: (_, provider, __) => provider.dataState == DataState.loading
                       ? const CustomProgress()
                       : ElevatedButtonCustom(
-                          color: blue,
+                         
                           textColor: white,
                           text: context.loc.add,
                           onPressed: () async {

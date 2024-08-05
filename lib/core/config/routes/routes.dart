@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_journey/features/apply_for_job/screens/select_apply_type_screen.dart';
 import 'package:job_journey/features/auth/screens/comapny_sign_up_screen.dart';
 import 'package:job_journey/features/auth/screens/login_screen.dart';
 import 'package:job_journey/features/auth/screens/selecte_account_type_screen.dart';
@@ -39,6 +40,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case JobSeekerSignUpScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const JobSeekerSignUpScreen()), settings: settings);
+    case SelectApplyTypeScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const SelectApplyTypeScreen()), settings: settings);
 
     
   }

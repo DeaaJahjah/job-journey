@@ -5,27 +5,37 @@ class JobSeekerDbServiec {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   // final collgeId = FirebaseAuth.instance.currentUser == null ? '' : FirebaseAuth.instance.currentUser!.uid;
 
-  Future<JobSeekerModel?> addJobSeeker({required JobSeekerModel user}) async {
+  Future<bool> addJobSeeker({required JobSeekerModel user}) async {
     try {
-      var doc = await _db.collection('JobSeekers').add(user.toJson());
-
-      final addedJob = user.copyWith(id: doc.id);
-
-      return addedJob;
-    } catch (e) {
-      print('catche errororororo$e');
-      return null;
-    }
-  }
-
-  Future<bool> updateJobSeeker({required JobSeekerModel user}) async {
-    try {
-      _db.collection('JobSeekers').doc(user.id).update(user.toJson());
+      await _db.collection('JobSeekers').doc(user.id).set(user.toJson());
 
       return true;
     } catch (e) {
       print('catche errororororo$e');
       return false;
     }
+  }
+
+  Future<bool> updateJobSeeker({required JobSeekerModel user}) async {
+    try {
+      await _db.collection('JobSeekers').doc(user.id).update(user.toJson());
+
+      return true;
+    } catch (e) {
+      print('catche errororororo$e');
+      return false;
+    }
+  }
+
+  Future<JobSeekerModel?> getJobSeeker({required userId}) async {
+    print('userId: $userId');
+    // try {
+    var doc = await _db.collection('JobSeekers').doc(userId).get();
+
+    return JobSeekerModel.fromFirestore(doc);
+    // } catch (e) {
+    //   print('catche errororororo$e');
+    //   return null;
+    // }
   }
 }

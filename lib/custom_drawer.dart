@@ -3,7 +3,8 @@ import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/chat/rooms.dart';
-import 'package:job_journey/features/company/screens/company_profile_screen.dart';
+import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -20,30 +21,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          UserAccountsDrawerHeader(
-            arrowColor: lightBlue,
-            onDetailsPressed: () {
-              if (context.isCompanyAccount) {
-                Navigator.of(context).pushNamed(CompanyProfileScreen.routeName);
-                return;
-              }
-              // Navigator.of(context).pushNamed(JobSeekerProfileScreen.routeName);
-            },
-            accountName: Text(context.firebaseUser!.displayName ?? 'لا يوجد', style: meduimTextStyle),
-            accountEmail: Text(context.firebaseUser!.email ?? 'لا يوجد', style: meduimTextStyle),
-            currentAccountPicture:
-                //  context.logedInUser!.photoURL == null || context.logedInUser!.photoURL == ''
-                //     ?
-                const CircleAvatar(
-              child: Icon(Icons.person),
-            ),
-            // : CircleAvatar(
-            //     backgroundImage: NetworkImage(context.logedInUser!.photoURL!),
-            //   ),
-
-            decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide.none), gradient: LinearGradient(colors: [lightBlue, blue])),
-          ),
+          if (!context.isCompanyAccount)
+            Consumer<JobSeekerProvider>(builder: (context, provider, child) {
+              final user = provider.jobSeekerModel;
+              return UserAccountsDrawerHeader(
+                arrowColor: lightBlue,
+                onDetailsPressed: () {
+                  // Navigator.of(context).pushNamed(CompanyProfileScreen.routeName);
+                },
+                accountName: Text(user!.name ?? 'لا يوجد', style: meduimTextStyle),
+                accountEmail: Text(user.email ?? 'لا يوجد', style: meduimTextStyle),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(user.profilePicture!),
+                ),
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide.none), gradient: LinearGradient(colors: [lightBlue, blue])),
+              );
+            }),
           ListTile(
             leading: const Icon(Icons.message, color: white),
             title: const Text('المحادثات', style: meduimTextStyle),

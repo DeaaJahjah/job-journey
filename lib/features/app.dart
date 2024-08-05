@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/routes/routes.dart';
+import 'package:job_journey/features/apply_for_job/providers/apply_provider.dart';
+import 'package:job_journey/features/chat/chat_provider.dart';
 import 'package:job_journey/features/company/providers/benfits_provider.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
@@ -24,6 +26,8 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<BenefitsProvider>(create: (_) => BenefitsProvider()),
         ChangeNotifierProvider<CreateUpdateCompanyProvider>(create: (_) => CreateUpdateCompanyProvider()),
         ChangeNotifierProvider<JobSeekerProvider>(create: (_) => JobSeekerProvider()),
+        ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
+        ChangeNotifierProvider<ApplayProvider>(create: (_) => ApplayProvider()),
 
           
       ],
@@ -33,6 +37,8 @@ class App extends StatelessWidget {
         locale: const Locale('ar'),
         supportedLocales: const [
           Locale("ar", "AE"),
+          // Locale("en", "EN"),
+
         ],
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         // const [

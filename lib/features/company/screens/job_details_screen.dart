@@ -2,9 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/custom_progress.dart';
+import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
+import 'package:job_journey/features/apply_for_job/screens/select_apply_type_screen.dart';
+import 'package:job_journey/features/chat/chat_page.dart';
+import 'package:job_journey/features/chat/chat_provider.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
+import 'package:provider/provider.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   static const routeName = '/job-details-screen';
@@ -178,32 +186,60 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       sizedBoxMedium,
                       TitleListWidget(title: context.loc.benefits, list: job.benefits ?? []),
                       sizedBoxMedium,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: blue), borderRadius: BorderRadius.circular(10)),
-                              child: const GradientIcon(
-                                offset: Offset.zero,
-                                gradient: LinearGradient(colors: [lightBlue, blue]),
-                                icon: Icons.chat,
+                      if (!context.isCompanyAccount)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Row(
+                            children: [
+                              Consumer<ChatProvider>(builder: (_, provider, child) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    await provider.createChatRoom(userId: job.companyId, userName: job.companyName);
+
+                                    if (provider.dataState == DataState.done) {
+                                      await Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatPage(
+                                            room: provider.room!,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      showErrorSnackBar(context, 'حدث خطأ عند انشاء الدردشة');
+                                    }
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: blue), borderRadius: BorderRadius.circular(10)),
+                                    child: provider.dataState != DataState.loading
+                                        ? const GradientIcon(
+                                            offset: Offset.zero,
+                                            gradient: LinearGradient(colors: [lightBlue, blue]),
+                                            icon: Icons.chat,
+                                          )
+                                        : const CustomProgress(),
+                                  ),
+                                );
+                              }),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButtonCustom(
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SelectApplyTypeScreen(
+                                        job: job,
+                                      ),
+                                    ));
+                                  },
+                                  text: context.loc.applyForJob,
+                                  textColor: white,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: ElevatedButtonCustom(
-                                onPressed: () {},
-                                text: context.loc.applyForJob,
-                                textColor: white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                            ],
+                          ),
+                        )
                     ])),
               ],
             ),
