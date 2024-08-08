@@ -49,7 +49,7 @@ class SelectApplyTypeScreen extends StatelessWidget {
                             applicationInfo: context
                                 .read<JobSeekerProvider>()
                                 .jobSeekerModel!
-                                .copyWith(id: context.firebaseUser!.uid),
+                                .copyWith(id: context.firebaseUser!.uid, createdAt: DateTime.now().toIso8601String()),
                             jobId: job!.id);
 
                         if (provider.dataState == DataState.failure) {

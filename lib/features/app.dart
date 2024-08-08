@@ -11,6 +11,7 @@ import 'package:job_journey/features/company/providers/create_update_company_pro
 import 'package:job_journey/features/company/providers/required_documents_provider.dart';
 import 'package:job_journey/features/company/providers/requirements_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
+import 'package:job_journey/features/job_seeker/services/analyze_profile_service.dart';
 import 'package:provider/provider.dart';
 // import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
@@ -30,6 +31,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<ChatProvider>(create: (_) => ChatProvider()),
         ChangeNotifierProvider<ApplayProvider>(create: (_) => ApplayProvider()),
         ChangeNotifierProvider<ApplicationsProvider>(create: (_) => ApplicationsProvider()),
+        ChangeNotifierProvider<AnalyzeProfileProvider>(create: (_) => AnalyzeProfileProvider()),
+
+        
       ],
       child: MaterialApp(
         // home: ApplicationsScreen(),

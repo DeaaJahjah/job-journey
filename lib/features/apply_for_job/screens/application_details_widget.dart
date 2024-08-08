@@ -151,7 +151,10 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
                     ? InkWell(
                         onTap: () async {
                           await provider.sendApplication(
-                              applicationInfo: application.copyWith(id: context.firebaseUser!.uid), jobId: jobId);
+                            applicationInfo: application.copyWith(
+                                id: context.firebaseUser!.uid, createdAt: DateTime.now().toIso8601String()),
+                            jobId: jobId,
+                          );
 
                           if (provider.dataState == DataState.failure) {
                             showErrorSnackBar(context, context.loc.errorSendingResume);

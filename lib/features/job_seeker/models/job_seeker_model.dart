@@ -25,7 +25,9 @@ class JobSeekerModel extends Equatable {
   final List<String>? softSkills;
   final List<String>? languages;
   @JsonKey(name: 'topics_subscription')
-  final List<Category>? topicsSubscription;
+  final List<Category>? topicsSubscription; 
+  @JsonKey(name: 'created_at')
+  final String? createdAt;
 
   const JobSeekerModel({
     this.id,
@@ -41,6 +43,7 @@ class JobSeekerModel extends Equatable {
     this.languages,
     this.profilePicture,
     this.topicsSubscription,
+      this.createdAt
   });
 
   Map<String, dynamic> getInfo() {
@@ -74,6 +77,8 @@ class JobSeekerModel extends Equatable {
     List<String>? softSkills,
     List<String>? languages,
     List<Category>? topicsSubscription,
+    final String? createdAt,
+
   }) {
     return JobSeekerModel(
       id: id ?? this.id,
@@ -89,6 +94,7 @@ class JobSeekerModel extends Equatable {
       softSkills: softSkills ?? this.softSkills,
       languages: languages ?? this.languages,
       topicsSubscription: topicsSubscription ?? this.topicsSubscription,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 

@@ -65,8 +65,9 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
 
     _chat = _model.startChat();
 
-    String prompt = '''I need help creating a CV that perfectly fits a specific job description.
-                and the response should be a json format only without any explination or text or qutation marks else that includes
+    String prompt =
+        '''Generate a JSON formatted CV based on the provided job description (text format) and user information (JSON format). 
+              Adhere strictly to the job description's requirements and use the following CV structure:
                 {
                   "name": "",
                   "phone_number": "",
@@ -82,7 +83,10 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
     prompt += '\nThis my information';
     prompt += context.read<JobSeekerProvider>().jobSeekerModel!.getInfo().toString();
     prompt += '\nThis the job details ';
-    prompt += '\nnotes do not add a json word before the response';
+    prompt += '\nnote do not add a json word before the response';
+    prompt += '\nnote add arabic and english languages to languages list of String';
+    prompt += '\nnote add university certificate to certificates list of String';
+
 
     prompt += widget.job!.toJson().toString();
     _generatedContent.add((image: null, text: 'انشئ سيرة ذاتية', fromUser: true));
@@ -91,6 +95,7 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
     //   () {
     //   },
     // );
+    print(prompt);
     _sendChatMessage(prompt);
   }
 
