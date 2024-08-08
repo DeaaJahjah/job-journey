@@ -10,6 +10,7 @@ import 'package:job_journey/features/company/screens/edit_company_profile_screen
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:job_journey/features/company/screens/job_overview_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/edit_job_seeker_profile_screen.dart';
+import 'package:job_journey/features/job_seeker/screens/analyze_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/job_seeker_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/job_seeker_sign_up_screen.dart';
 import 'package:job_journey/features/notifications/screens/notifications_screen.dart';
@@ -65,6 +66,10 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case EditJobSeekerProfileScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const EditJobSeekerProfileScreen()), settings: settings);
+    case AnalyzeProfileScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const AnalyzeProfileScreen()), settings: settings);
+  
+  
   }
 
   return null;
