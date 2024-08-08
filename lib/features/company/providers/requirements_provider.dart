@@ -9,9 +9,10 @@ class RequirementsProvider with ChangeNotifier {
   ];
 
   setRequirements(List<String> requirements) {
+    if (requirements.isEmpty) return;
+    this.requirements.clear();
+    controllers.clear();
     for (int i = 0; i < requirements.length; i++) {
-      this.requirements.clear();
-      controllers.clear();
       this.requirements.add(Helper(id: i, text: requirements[i]));
       controllers.add(TextEditingController(text: requirements[i]));
     }

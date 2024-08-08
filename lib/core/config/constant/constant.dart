@@ -7,13 +7,14 @@ const Color purple = Color(0xff8A12E6);
 // const Color lightBlue = Color(0xff0C1332);
 
 // const Color darkPurple = Color.fromARGB(255, 236, 189, 31);
-const Color darkGray = Color.fromARGB(255, 10, 10, 10);
+const Color darkGray = Color.fromARGB(255, 20, 20, 20); // Color.fromARGB(255, 10, 10, 10);
 const Color onbackground = Color.fromARGB(255, 0, 0, 0);
 const Color background = Color.fromARGB(255, 0, 0, 0);
 const Color white = Color(0xffffffff);
 const Color lightBlue = Color.fromARGB(255, 124, 145, 250);
 const Color gray = Color.fromARGB(255, 224, 223, 223);
 const Color brown = Color(0XFF2E2D2D);
+// const onBackground = Color.fromARGB(255, 20, 20, 20);
 const String font = 'Tajawal';
 
 const TextStyle smallTextStyle = TextStyle(color: white, fontFamily: font, fontSize: 12);

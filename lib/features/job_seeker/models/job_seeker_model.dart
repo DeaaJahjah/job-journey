@@ -24,7 +24,7 @@ class JobSeekerModel extends Equatable {
   @JsonKey(name: 'soft_skills')
   final List<String>? softSkills;
   final List<String>? languages;
-  @JsonKey(name: 'topics_subscription')
+  @JsonKey(name: 'topics_subscriptions')
   final List<Category>? topicsSubscription;
 
   const JobSeekerModel({

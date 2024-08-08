@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
+import 'package:job_journey/features/company/screens/edit_company_profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class CompanyProfileScreen extends StatefulWidget {
@@ -18,8 +21,8 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      // get Profile
-      // context.read<CompanyProvider>().getProfile();
+      final companyId = ModalRoute.of(context)!.settings.arguments as String?;
+      if (companyId != null) context.read<CompanyProvider>().getCompanyProfile(userId: companyId);
     });
     super.initState();
   }
@@ -48,6 +51,17 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                 context.loc.profile,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white, fontWeight: FontWeight.bold),
               ),
+              actions: [
+                if (context.isCompanyAccount)
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(EditCompanyProfileScreen.routeName);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.edit, color: white),
+                      ))
+              ],
               foregroundColor: white,
               elevation: 8,
               pinned: true,
@@ -93,7 +107,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                           // ),
                         ),
                         Text(
-                          profile.industry,
+                          SharedPreferencesManager().isArabic() ? profile.industry.name : profile.industry.enName,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14, color: white),
                         ),
                         sizedBoxSmall,

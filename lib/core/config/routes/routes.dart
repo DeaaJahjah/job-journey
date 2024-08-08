@@ -6,8 +6,10 @@ import 'package:job_journey/features/auth/screens/login_screen.dart';
 import 'package:job_journey/features/auth/screens/selecte_account_type_screen.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
 import 'package:job_journey/features/company/screens/company_profile_screen.dart';
+import 'package:job_journey/features/company/screens/edit_company_profile_screen.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:job_journey/features/company/screens/job_overview_screen.dart';
+import 'package:job_journey/features/job_seeker/screens/edit_job_seeker_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/job_seeker_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/job_seeker_sign_up_screen.dart';
 import 'package:job_journey/features/notifications/screens/notifications_screen.dart';
@@ -31,7 +33,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case HomeScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const HomeScreen()));
     case AddJobScreen.routeName:
-      return MaterialPageRoute(builder: ((_) => const AddJobScreen()));
+      return MaterialPageRoute(builder: ((_) => const AddJobScreen()), settings: settings);
     case JobDetailsScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const JobDetailsScreen()), settings: settings);
 
@@ -57,6 +59,12 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: ((_) => const JobSeekerSignUpScreen()), settings: settings);
     case SelectApplyTypeScreen.routeName:
       return MaterialPageRoute(builder: ((_) => const SelectApplyTypeScreen()), settings: settings);
+
+    case EditCompanyProfileScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const EditCompanyProfileScreen()), settings: settings);
+
+    case EditJobSeekerProfileScreen.routeName:
+      return MaterialPageRoute(builder: ((_) => const EditJobSeekerProfileScreen()), settings: settings);
   }
 
   return null;

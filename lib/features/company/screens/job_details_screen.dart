@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
@@ -8,10 +9,15 @@ import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
+import 'package:job_journey/core/config/widgets/loading_dialog.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
+import 'package:job_journey/features/applications/screens/applications_screen.dart';
 import 'package:job_journey/features/apply_for_job/screens/select_apply_type_screen.dart';
 import 'package:job_journey/features/chat/chat_page.dart';
 import 'package:job_journey/features/chat/chat_provider.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
+import 'package:job_journey/features/company/providers/company_provider.dart';
+import 'package:job_journey/features/company/screens/add_job_screen.dart';
 import 'package:provider/provider.dart';
 
 class JobDetailsScreen extends StatefulWidget {
@@ -28,15 +34,108 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   final _snap = false;
   final _floating = false;
   @override
-  @override
   Widget build(BuildContext context) {
-    final job = ModalRoute.of(context)!.settings.arguments as JobModel;
+    JobModel job = context.watch<CompanyProvider>().jobDetails!;
     return Scaffold(
       body: SafeArea(
           child: CustomScrollView(
         controller: controller,
         slivers: <Widget>[
           SliverAppBar(
+            actions: [
+              if (context.isCompanyAccount)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PopupMenuButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    child: const Icon(Icons.settings),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.edit,
+                              color: background,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              context.loc.edit,
+                              style: smallTextStyle.copyWith(color: background, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        onTap: () async {
+                          Navigator.of(context).pushNamed(AddJobScreen.routeName, arguments: job);
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.delete,
+                              color: background,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              context.loc.delete,
+                              style: smallTextStyle.copyWith(color: background, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          final provider = context.read<CompanyProvider>();
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                  surfaceTintColor: gray,
+                                  backgroundColor: darkGray,
+                                  // icon:
+                                  title: Row(
+                                    children: [
+                                      const Icon(Icons.error_outline_outlined),
+                                      const SizedBox(width: 10),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5.0),
+                                        child: Text(context.loc.confirm, style: largTextStyle),
+                                      ),
+                                    ],
+                                  ),
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(context.loc.areYouSureToDeleteTheJob, style: largTextStyle),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        showLoadingDialog(context);
+                                        await provider.deleteJob(job.id).then((_) {
+                                          if (provider.dataState == DataState.failure) {
+                                            Navigator.of(context).pop();
+                                            showErrorSnackBar(context, context.loc.somethingWentWrong);
+                                            return;
+                                          }
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                          showSuccessSnackBar(context, context.loc.jobDeletedSuccessfully);
+                                        });
+                                      },
+                                      child: Text(context.loc.delete, style: meduimTextStyle),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.of(context).pop(),
+                                      child: Text(context.loc.cancel, style: meduimTextStyle),
+                                    )
+                                  ],
+                                );
+                              });
+                        },
+                      )
+                    ],
+                  ),
+                ),
+            ],
             pinned: _pinned,
             snap: _snap,
             floating: _floating,
@@ -172,7 +271,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         children: [
                           IconTextContainer(
                             title: context.loc.category,
-                            text: job.category.name,
+                            text: SharedPreferencesManager().isArabic() ? job.category.name : job.category.enName,
                             icon: Icons.category,
                           ),
                         ],
@@ -187,11 +286,12 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       sizedBoxMedium,
                       TitleListWidget(title: context.loc.benefits, list: job.benefits ?? []),
                       sizedBoxMedium,
-                      if (!context.isCompanyAccount)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Row(
-                            children: [
+                      // if (!context.isCompanyAccount)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Row(
+                          children: [
+                            if (!context.isCompanyAccount) ...[
                               Consumer<ChatProvider>(builder: (_, provider, child) {
                                 return GestureDetector(
                                   onTap: () async {
@@ -224,23 +324,26 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                   ),
                                 );
                               }),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: ElevatedButtonCustom(
-                                  onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => SelectApplyTypeScreen(
-                                        job: job,
-                                      ),
-                                    ));
-                                  },
-                                  text: context.loc.applyForJob,
-                                  textColor: white,
-                                ),
-                              ),
+                              const SizedBox(width: 10)
                             ],
-                          ),
-                        )
+                            Expanded(
+                              child: ElevatedButtonCustom(
+                                onPressed: () {
+                                  context.isCompanyAccount
+                                      ? Navigator.of(context).pushNamed(ApplicationsScreen.routeName, arguments: job.id)
+                                      : Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => SelectApplyTypeScreen(
+                                            job: job,
+                                          ),
+                                        ));
+                                },
+                                text: context.isCompanyAccount ? context.loc.applications : context.loc.applyForJob,
+                                textColor: white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ])),
               ],
             ),
@@ -267,7 +370,7 @@ class IconTextContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 150),
+      constraints: BoxConstraints(minWidth: SharedPreferencesManager().isArabic() ? 150 : 180),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(

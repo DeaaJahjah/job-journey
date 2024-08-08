@@ -7,9 +7,10 @@ class BenefitsProvider with ChangeNotifier {
   List<Helper> benefits = [const Helper(id: 0, text: ''), const Helper(id: 1, text: '')];
 
   setBenefits(List<String> benefits) {
+    if (benefits.isEmpty) return;
+    this.benefits.clear();
+    controllers.clear();
     for (int i = 0; i < benefits.length; i++) {
-      this.benefits.clear();
-      controllers.clear();
       this.benefits.add(Helper(id: i, text: benefits[i]));
       controllers.add(TextEditingController(text: benefits[i]));
     }

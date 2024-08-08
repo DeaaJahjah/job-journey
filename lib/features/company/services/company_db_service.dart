@@ -25,6 +25,20 @@ class CompanyDbServiec {
     }
   }
 
+  Future<JobModel?> updateJob({required JobModel job}) async {
+    try {
+      JobModel? updatedJob;
+
+      await _db.collection('jobs').doc(job.id).update(job.toJson());
+      var query = await _db.collection('jobs').doc(job.id).get();
+      print(query);
+      updatedJob = JobModel.fromFirestore(query);
+      return updatedJob;
+    } on FirebaseException catch (_) {
+      return null;
+    }
+  }
+
   Future<JobModel?> getJobDetails({required String jobId}) async {
     try {
       var query = await _db.doc('jobs/$jobId').get();
@@ -82,6 +96,15 @@ class CompanyDbServiec {
     } catch (e) {
       print('catche errororororo $e');
       return null;
+    }
+  }
+
+  Future<String?> deleteJob({required String jobId}) async {
+    try {
+      await _db.collection('jobs').doc(jobId).delete();
+      return null;
+    } on FirebaseException catch (e) {
+      return e.toString();
     }
   }
 }

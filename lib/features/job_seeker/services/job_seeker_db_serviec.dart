@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
 
 class JobSeekerDbServiec {
@@ -30,12 +31,25 @@ class JobSeekerDbServiec {
   Future<JobSeekerModel?> getJobSeeker({required userId}) async {
     print('userId: $userId');
     try {
-    var doc = await _db.collection('JobSeekers').doc(userId).get();
+      var doc = await _db.collection('JobSeekers').doc(userId).get();
 
-    return JobSeekerModel.fromFirestore(doc);
+      return JobSeekerModel.fromFirestore(doc);
     } catch (e) {
       print('catche errororororo$e');
       return null;
+    }
+  }
+
+  Future<String?> updateTopicsSubscription(
+      {required String seekerId, required List<Category> topicsSubscription}) async {
+    try {
+      await FirebaseFirestore.instance.collection('JobSeekers').doc(seekerId).update(
+        {"topics_subscriptions": topicsSubscription.map((e) => e.toJson()).toList()},
+      );
+      return null;
+    } catch (e) {
+      print('error : $e');
+      return e.toString();
     }
   }
 }

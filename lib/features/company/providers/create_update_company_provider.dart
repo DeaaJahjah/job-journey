@@ -9,7 +9,7 @@ class CreateUpdateCompanyProvider with ChangeNotifier {
   Future<void> createCompany({required CompanyModel company}) async {
     dataState = DataState.loading;
     notifyListeners();
-    final jobs = await CompanyDbServiec().createCompany(company: company);
+    await CompanyDbServiec().createCompany(company: company);
     dataState = DataState.done;
     notifyListeners();
   }

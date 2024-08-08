@@ -66,5 +66,21 @@
     "downloadPdf": "تحميل PDF",
     "topicsSubscription": "الإهتمامات",
     "selectTopicsOfYourInterest": "حدد المجالات المهتم بها لتصلك اشعارات بفرص العمل الجديدة",
-    "save": "حفظ"
+    "save": "حفظ",
+    "topicsSubscriptionsUpdatedSuccessfully": "تم تعديل الإهتمامات بنجاح.",
+    "delete": "حذف",
+    "jobUpdatedSuccessfully": "تم تعديل الوظيفة بنجاح.",
+    "jobDeletedSuccessfully": "تم حذف الوظيفة بنجاح.",
+    "cancel": "إلغاء",
+    "areYouSureToDeleteTheJob": "هل ظانت متأكد من حذف الوظيفة؟",
+    "confirm": "تأكيد",
+    "language": "اللغة",
+    "signOut": "تسجيل خروج",
+    "conversations": "المحادثات",
+    "professionalInformation": "المعلومات المهنية",
+    "joinUs": "إنضم إلينا",
+    "dontHaveAnAccount": "ليس لديك حساب؟",
+    "anErrorAccourdWhileCreatingChat": "حدث خطأ أثناء انشاء الدردشة",
+    "allFieldsRequired": "جميع الحقول مطلوبة",
+    "editProfile": "تعديل الملف الشخصي"
 }

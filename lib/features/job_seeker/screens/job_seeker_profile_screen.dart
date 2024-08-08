@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
+import 'package:job_journey/features/job_seeker/screens/edit_job_seeker_profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class JobSeekerProfileScreen extends StatefulWidget {
@@ -18,8 +20,10 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      //get profile
-      // context.read<JobSeekerProvider>().
+      final seekerId = ModalRoute.of(context)!.settings.arguments as String?;
+      if (seekerId != null) {
+        context.read<JobSeekerProvider>().getJobSeeker(userId: seekerId);
+      }
     });
     super.initState();
   }
@@ -47,6 +51,17 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                 context.loc.profile,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white, fontWeight: FontWeight.bold),
               ),
+              actions: [
+                if (!context.isCompanyAccount)
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(EditJobSeekerProfileScreen.routeName);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.edit, color: white),
+                      ))
+              ],
               foregroundColor: white,
               elevation: 8,
               pinned: true,
@@ -215,12 +230,14 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        profile.skills?[index] ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(color: white, letterSpacing: 1),
+                                      Expanded(
+                                        child: Text(
+                                          profile.skills?[index] ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: white, letterSpacing: 1),
+                                        ),
                                       ),
                                     ],
                                   ))),
@@ -257,12 +274,14 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        profile.softSkills?[index] ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(color: white, letterSpacing: 1),
+                                      Expanded(
+                                        child: Text(
+                                          profile.softSkills?[index] ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: white, letterSpacing: 1),
+                                        ),
                                       ),
                                     ],
                                   ))),
@@ -300,12 +319,14 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        profile.certificates?[index] ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(color: white, letterSpacing: 1),
+                                      Expanded(
+                                        child: Text(
+                                          profile.certificates?[index] ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: white, letterSpacing: 1),
+                                        ),
                                       ),
                                     ],
                                   ))),
@@ -319,7 +340,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                       sizedBoxSmall,
                       Row(
                         children: [
-                          const Icon(Icons.school_rounded, color: Colors.grey),
+                          const Icon(Icons.language, color: Colors.grey),
                           const SizedBox(width: 5),
                           Text(
                             context.loc.languages,
@@ -343,9 +364,12 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              Text(
-                                profile.languages?[index] ?? '',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                              Expanded(
+                                child: Text(
+                                  profile.languages?[index] ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                                ),
                               ),
                             ],
                           ),
@@ -385,9 +409,12 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              Text(
-                                profile.topicsSubscription?[index].name ?? '',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                              Expanded(
+                                child: Text(
+                                  profile.topicsSubscription?[index].name ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                                ),
                               ),
                             ],
                           ),
