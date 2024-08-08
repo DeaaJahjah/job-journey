@@ -7,8 +7,8 @@ import 'package:job_journey/features/company/services/company_db_service.dart';
 class CompanyProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
   List<JobModel> myJobs = [];
-  JobModel? jobDetails;
   CompanyModel? profile;
+  JobModel? jobDetails;
 
   Future<void> getJobs() async {
     dataState = DataState.loading;
@@ -50,6 +50,38 @@ class CompanyProvider with ChangeNotifier {
       } else {
         myJobs.add(newJob);
       }
+      dataState = DataState.done;
+    }
+    notifyListeners();
+  }
+
+  Future<void> updateJob(JobModel job) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final updatedJob = await CompanyDbServiec().updateJob(job: job);
+    if (updatedJob == null) {
+      dataState = DataState.failure;
+    } else {
+      for (int index = 0; index < myJobs.length; index++) {
+        if (myJobs[index].id == updatedJob.id) {
+          myJobs[index] = updatedJob;
+          break;
+        }
+      }
+      jobDetails = updatedJob;
+      dataState = DataState.done;
+    }
+    notifyListeners();
+  }
+
+  Future<void> deleteJob(jobId) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final errorMessage = await CompanyDbServiec().deleteJob(jobId: jobId);
+    if (errorMessage != null) {
+      dataState = DataState.failure;
+    } else {
+      myJobs.removeWhere((job) => job.id == jobId);
       dataState = DataState.done;
     }
     notifyListeners();

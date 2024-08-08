@@ -8,6 +8,7 @@ import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/drop_down_custom.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/company/providers/benfits_provider.dart';
@@ -30,18 +31,14 @@ class AddJobScreen extends StatefulWidget {
 class _AddJobScreenState extends State<AddJobScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController requirementsController = TextEditingController();
-  TextEditingController documentsController = TextEditingController();
   TextEditingController experienceController = TextEditingController();
   TextEditingController salaryController = TextEditingController();
   TextEditingController additionalInfoController = TextEditingController();
-  TextEditingController benefitsController = TextEditingController();
   TextEditingController deadLineController = TextEditingController();
   String? selectedType;
   String? selectedCity;
   Category? selectedCategory;
 
-  List<TextEditingController> requirements = [TextEditingController()];
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -52,8 +49,22 @@ class _AddJobScreenState extends State<AddJobScreen> {
     super.deactivate();
   }
 
+  // JobModel? job;
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      final job = ModalRoute.of(context)!.settings.arguments as JobModel?;
+      if (job != null) {
+        setControllersForUpdate(job);
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final jobForUpdate = ModalRoute.of(context)!.settings.arguments as JobModel?;
     return Scaffold(
       appBar: AppBar(
         foregroundColor: white,
@@ -68,12 +79,16 @@ class _AddJobScreenState extends State<AddJobScreen> {
               TextFieldCustom(
                 text: context.loc.jobTitle,
                 controller: titleController,
+                icon: Icons.title_rounded,
               ),
               sizedBoxSmall,
               DropDownCustom(
+                icon: Icons.category_rounded,
                 hint: context.loc.category,
-                categories: categories.map((e) => e.name).toList(), // jobTypes,
-                selectedItem: selectedCategory?.name,
+                categories: categories
+                    .map((e) => SharedPreferencesManager().isArabic() ? e.name : e.enName)
+                    .toList(), // jobTypes,
+                selectedItem: SharedPreferencesManager().isArabic() ? selectedCategory?.name : selectedCategory?.enName,
                 onChanged: (item) {
                   setState(() {
                     selectedCategory = categories.getCategory(item!);
@@ -90,6 +105,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                     selectedType = item;
                   });
                 },
+                icon: Icons.access_time_filled_rounded,
               ),
               sizedBoxSmall,
               DropDownCustom(
@@ -101,6 +117,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                     selectedCity = item;
                   });
                 },
+                icon: Icons.location_pin,
               ),
               sizedBoxSmall,
               Text(context.loc.requirements,
@@ -116,12 +133,14 @@ class _AddJobScreenState extends State<AddJobScreen> {
               TextFieldCustom(
                 text: context.loc.experienceLevel,
                 controller: experienceController,
+                icon: Icons.bar_chart_rounded,
               ),
               sizedBoxSmall,
               TextFieldCustom(
                 text: context.loc.salary,
                 controller: salaryController,
                 keyboardType: TextInputType.number,
+                icon: Icons.attach_money_rounded,
               ),
               sizedBoxSmall,
               TextFieldCustom(
@@ -129,6 +148,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 controller: descriptionController,
                 maxLine: null,
                 keyboardType: TextInputType.multiline,
+                icon: Icons.description_rounded,
               ),
               sizedBoxSmall,
               TextFieldCustom(
@@ -136,6 +156,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 controller: additionalInfoController,
                 validate: false,
                 maxLine: null,
+                icon: Icons.info_outline_rounded,
               ),
               sizedBoxSmall,
               Text(context.loc.benefits,
@@ -152,6 +173,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 text: context.loc.applicationDeadline,
                 controller: deadLineController,
                 readOnly: true,
+                icon: Icons.hourglass_top_rounded,
               ),
               sizedBoxMedium,
               Padding(
@@ -161,13 +183,14 @@ class _AddJobScreenState extends State<AddJobScreen> {
                       ? const CustomProgress()
                       : ElevatedButtonCustom(
                           textColor: white,
-                          text: context.loc.add,
+                          text: jobForUpdate == null ? context.loc.add : context.loc.edit,
                           onPressed: () async {
                             final isValid = _formKey.currentState?.validate() ?? false;
                             if (isValid && selectedCategory != null && selectedCity != null && selectedType != null) {
                               final JobModel job = JobModel(
-                                  id: '',
-                                  createdAt: DateTime.now().toIso8601String(),
+                                  id: jobForUpdate != null ? jobForUpdate.id : '',
+                                  createdAt:
+                                      jobForUpdate == null ? DateTime.now().toIso8601String() : jobForUpdate.createdAt,
                                   title: titleController.text,
                                   description: descriptionController.text,
                                   location: selectedCity!,
@@ -184,18 +207,29 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                   additionalInfo: additionalInfoController.text,
                                   applicationDeadline: deadLineController.text,
                                   benefits: context.read<BenefitsProvider>().benefits.map((ben) => ben.text).toList(),
-                                  companyPicture: context.firebaseUser?.photoURL,
+                                  companyPicture: context.read<CompanyProvider>().profile?.profilePicture,
                                   salary: double.parse(salaryController.text),
                                   companyId: context.userUid!,
                                   companyName: context.firebaseUser!.displayName!);
-                              await provider.addJob(job).then((_) {
-                                if (provider.dataState == DataState.failure) {
-                                  showErrorSnackBar(context, context.loc.somethingWentWrong);
-                                  return;
-                                }
-                                showSuccessSnackBar(context, context.loc.jobAddedSuccessfully);
-                                Navigator.of(context).pop();
-                              });
+                              if (jobForUpdate != null) {
+                                provider.updateJob(job).then((_) {
+                                  if (provider.dataState == DataState.failure) {
+                                    showErrorSnackBar(context, context.loc.somethingWentWrong);
+                                    return;
+                                  }
+                                  showSuccessSnackBar(context, context.loc.jobUpdatedSuccessfully);
+                                  Navigator.of(context).pop(job);
+                                });
+                              } else {
+                                provider.addJob(job).then((_) {
+                                  if (provider.dataState == DataState.failure) {
+                                    showErrorSnackBar(context, context.loc.somethingWentWrong);
+                                    return;
+                                  }
+                                  showSuccessSnackBar(context, context.loc.jobAddedSuccessfully);
+                                  Navigator.of(context).pop();
+                                });
+                              }
                             } else {
                               showErrorSnackBar(context, context.loc.someFieldAreRequired);
                             }
@@ -206,5 +240,20 @@ class _AddJobScreenState extends State<AddJobScreen> {
             ],
           )),
     );
+  }
+
+  void setControllersForUpdate(JobModel job) {
+    titleController = TextEditingController(text: job.title);
+    descriptionController = TextEditingController(text: job.description);
+    experienceController = TextEditingController(text: job.experienceLevel);
+    salaryController = TextEditingController(text: job.salary.toString());
+    additionalInfoController = TextEditingController(text: job.additionalInfo);
+    deadLineController = TextEditingController(text: job.applicationDeadline);
+    selectedType = job.jobType;
+    selectedCity = job.location;
+    selectedCategory = job.category;
+    context.read<RequiredDocumentsProvider>().setdocuments(job.requiredDocuments);
+    context.read<RequirementsProvider>().setRequirements(job.requirements);
+    context.read<BenefitsProvider>().setBenefits(job.benefits ?? []);
   }
 }

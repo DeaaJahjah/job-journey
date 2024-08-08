@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:job_journey/features/company/models/category.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'company_model.g.dart';
@@ -15,7 +16,7 @@ class CompanyModel extends Equatable {
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
   final String password;
-  final String industry;
+  final Category industry;
   final String location;
   final String description;
   @JsonKey(name: 'founding_date')
@@ -62,7 +63,7 @@ class CompanyModel extends Equatable {
     String? email,
     String? profilePicture,
     String? password,
-    String? industry,
+    Category? industry,
     String? location,
     String? contactPhone,
     String? contactEmail,

@@ -6,6 +6,7 @@ import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/custom_drawer.dart';
 import 'package:job_journey/features/applications/screens/applications_screen.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
@@ -64,11 +65,17 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
       floatingActionButton: !context.isCompanyAccount
           ? null
           : FloatingActionButton(
-              backgroundColor: blue,
+              backgroundColor: Colors.transparent,
               onPressed: () {
                 Navigator.of(context).pushNamed(AddJobScreen.routeName);
               },
-              child: const Icon(Icons.add, color: background),
+              child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: const LinearGradient(
+                          colors: [lightBlue, blue], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                  child: const Icon(Icons.add, color: white)),
             ),
     );
   }
@@ -85,7 +92,8 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(JobDetailsScreen.routeName, arguments: job);
+        context.read<CompanyProvider>().jobDetails = job;
+        Navigator.of(context).pushNamed(JobDetailsScreen.routeName);
       },
       child: Container(
         decoration: BoxDecoration(boxShadow: [
@@ -100,15 +108,20 @@ class JobCard extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(CompanyProfileScreen.routeName);
+                    Navigator.of(context).pushNamed(CompanyProfileScreen.routeName,
+                        arguments: context.isCompanyAccount ? null : job.companyId);
                   },
                   child: Container(
                     decoration: const BoxDecoration(
                         borderRadius:
                             BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10))),
                     child: ClipRRect(
-                      borderRadius:
-                          const BorderRadius.only(topRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                      borderRadius: BorderRadius.only(
+                        topRight: SharedPreferencesManager().isArabic() ? const Radius.circular(10) : Radius.zero,
+                        bottomLeft: SharedPreferencesManager().isArabic() ? const Radius.circular(10) : Radius.zero,
+                        topLeft: SharedPreferencesManager().isArabic() ? Radius.zero : const Radius.circular(10),
+                        bottomRight: SharedPreferencesManager().isArabic() ? Radius.zero : const Radius.circular(10),
+                      ),
                       child: Image.network(
                         "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg",
                         height: 75,
@@ -150,10 +163,16 @@ class JobCard extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [lightBlue, blue]),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [lightBlue, blue]),
+                    borderRadius: BorderRadius.only(
+                      topLeft: SharedPreferencesManager().isArabic() ? const Radius.circular(10) : Radius.zero,
+                      bottomRight: SharedPreferencesManager().isArabic() ? const Radius.circular(10) : Radius.zero,
+                      topRight: SharedPreferencesManager().isArabic() ? Radius.zero : const Radius.circular(10),
+                      bottomLeft: SharedPreferencesManager().isArabic() ? Radius.zero : const Radius.circular(10),
+                    ),
+                  ),
                   child: Text(
                     job.jobType,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: gray, fontWeight: FontWeight.w500),
@@ -196,7 +215,7 @@ class JobCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          job.category.name,
+                          SharedPreferencesManager().isArabic() ? job.category.name : job.category.enName,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -301,16 +320,16 @@ class JobCard extends StatelessWidget {
             sizedBoxSmall,
             if (job.companyId == context.firebaseUser!.uid)
               Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: ElevatedButtonCustom(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(ApplicationsScreen.routeName, arguments: job.id);
-                },
-                text: context.loc.applications,
-                textColor: white,
-                // ),
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: ElevatedButtonCustom(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(ApplicationsScreen.routeName, arguments: job.id);
+                  },
+                  text: context.loc.applications,
+                  textColor: white,
+                  // ),
+                ),
               ),
-            ),
             const SizedBox(
               height: 10,
             )

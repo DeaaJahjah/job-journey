@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/drop_down_custom.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/core/services/file_services.dart';
@@ -40,7 +41,7 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
   TextEditingController languages = TextEditingController();
   TextEditingController skills = TextEditingController();
   TextEditingController softSkills = TextEditingController();
-
+  String? selectedCity;
   XFile? pickedimage;
   String fileName = '';
   File? imageFile;
@@ -148,11 +149,22 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
               const SizedBox(
                 height: 20,
               ),
-              TextFieldCustom(text: context.loc.location, controller: location, icon: Icons.location_on),
+              DropDownCustom(
+                hint: context.loc.location,
+                categories: cities,
+                selectedItem: selectedCity,
+                onChanged: (item) {
+                  setState(() {
+                    selectedCity = item;
+                  });
+                },
+                icon: Icons.location_pin,
+              ),
+              // TextFieldCustom(text: context.loc.location, controller: location, icon: Icons.location_on),
               const SizedBox(
                 height: 20,
               ),
-              const Text('المعلومات المهنية'),
+              Text(context.loc.professionalInformation),
               TextFieldCustom(
                 text: context.loc.aboutYou,
                 controller: description,
@@ -259,7 +271,7 @@ class _JobSeekerSignUpScreenState extends State<JobSeekerSignUpScreen> {
                                 phoneNumber: phoneController.text,
                                 email: email.text,
                                 password: passwordController.text,
-                                location: location.text,
+                                location: selectedCity ?? '',
                                 summary: description.text,
                                 profilePicture: imageUrl,
                                 certificates: certificates.text.split('-'),

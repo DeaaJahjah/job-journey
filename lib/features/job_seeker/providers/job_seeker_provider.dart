@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:job_journey/core/config/enums/enums.dart';
+import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
 import 'package:job_journey/features/job_seeker/services/job_seeker_db_serviec.dart';
 
@@ -10,7 +11,7 @@ class JobSeekerProvider with ChangeNotifier {
   Future<void> addJobSeeker({required JobSeekerModel user}) async {
     dataState = DataState.loading;
     notifyListeners();
-    final jobs = await JobSeekerDbServiec().addJobSeeker(user: user);
+    await JobSeekerDbServiec().addJobSeeker(user: user);
     dataState = DataState.done;
     notifyListeners();
   }
@@ -41,5 +42,21 @@ class JobSeekerProvider with ChangeNotifier {
       dataState = DataState.done;
       notifyListeners();
     }
+  }
+
+  Future<void> updateTopicsSubscription({required String seekerId, required List<Category> topicsSubscription}) async {
+    dataState = DataState.loading;
+    notifyListeners();
+    final result = await JobSeekerDbServiec().updateTopicsSubscription(
+      seekerId: jobSeekerModel!.id!,
+      topicsSubscription: topicsSubscription,
+    );
+    if (result == null) {
+      jobSeekerModel = jobSeekerModel?.copyWith(topicsSubscription: topicsSubscription);
+      dataState = DataState.done;
+    } else {
+      dataState = DataState.failure;
+    }
+    notifyListeners();
   }
 }

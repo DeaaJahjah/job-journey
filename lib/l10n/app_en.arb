@@ -64,5 +64,22 @@
     "downloadPdf": "Download PDF",
     "topicsSubscription": "Topics Subscription",
     "selectTopicsOfYourInterest": "Select the areas of interest to receive notifications of new job opportunities.",
-    "save": "Save"
+    "selectAccountType": "Select account type",
+    "save": "Save",
+    "topicsSubscriptionsUpdatedSuccessfully": "Topics subscriptions updated successfully.",
+    "delete": "Delete",
+    "jobUpdatedSuccessfully": "Job updated successfully.",
+    "jobDeletedSuccessfully": "Job deleted successfully",
+    "cancel": "Cancel",
+    "areYouSureToDeleteTheJob": "Are you sure to delete the job?",
+    "confirm": "Confirm",
+    "language": "Language",
+    "signOut": "Sign out",
+    "conversations": "Conversations",
+    "professionalInformation": "Professional information",
+    "joinUs": "Join Us",
+    "dontHaveAnAccount": "Do not have an account?",
+    "anErrorAccourdWhileCreatingChat": "An error accourd while creating chat",
+    "allFieldsRequired": "All fields are required",
+    "editProfile": "Edit profile"
 }

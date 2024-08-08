@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/routes/routes.dart';
+import 'package:job_journey/core/settings/language_provider.dart';
 import 'package:job_journey/features/applications/providers/applications_provider.dart';
 import 'package:job_journey/features/apply_for_job/providers/apply_provider.dart';
 import 'package:job_journey/features/chat/chat_provider.dart';
@@ -35,34 +36,42 @@ class App extends StatelessWidget {
 
         
       ],
-      child: MaterialApp(
-        // home: ApplicationsScreen(),
-        onGenerateRoute: onGenerateRoute,
-        debugShowCheckedModeBanner: false,
-        locale: const Locale('ar'),
-        supportedLocales: const [
-          Locale("ar", "AE"),
-          // Locale("en", "EN"),
-        ],
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        // const [
-        //   GlobalCupertinoLocalizations.delegate,
-        //   GlobalMaterialLocalizations.delegate,
-        //   GlobalWidgetsLocalizations.delegate,
-        // ],
-        theme: ThemeData(
-            brightness: Brightness.light,
-            primaryColor: blue,
-            scaffoldBackgroundColor: background,
-            appBarTheme: const AppBarTheme(
-                backgroundColor: background,
-                foregroundColor: white,
-                centerTitle: true,
-                toolbarHeight: 50,
-                titleTextStyle: appBarTextStyle),
-            fontFamily: font),
-        initialRoute: '/',
-      ),
+      child: Builder(builder: (context) {
+        return Consumer<LanguageProvider>(builder: (context, lanProvider, _) {
+          return MaterialApp(
+            // home: ApplicationsScreen(),
+            onGenerateRoute: onGenerateRoute,
+            debugShowCheckedModeBanner: false,
+            locale: lanProvider.locale ?? const Locale('ar'), // const Locale('ar'),
+            supportedLocales: const [
+              Locale(
+                "ar",
+              ),
+              Locale(
+                "en",
+              ),
+            ],
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            // const [
+            //   GlobalCupertinoLocalizations.delegate,
+            //   GlobalMaterialLocalizations.delegate,
+            //   GlobalWidgetsLocalizations.delegate,
+            // ],
+            theme: ThemeData(
+                brightness: Brightness.light,
+                primaryColor: blue,
+                scaffoldBackgroundColor: background,
+                appBarTheme: const AppBarTheme(
+                    backgroundColor: background,
+                    foregroundColor: white,
+                    centerTitle: true,
+                    toolbarHeight: 50,
+                    titleTextStyle: appBarTextStyle),
+                fontFamily: font),
+            initialRoute: '/',
+          );
+        });
+      }),
     );
   }
 }

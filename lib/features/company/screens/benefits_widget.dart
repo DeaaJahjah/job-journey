@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/company/providers/benfits_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -21,7 +22,6 @@ class BenefitsWidget extends StatelessWidget {
         separatorBuilder: (context, index) => sizedBoxSmall,
         itemBuilder: (context, index) {
           return Column(
-            key: UniqueKey(),
             children: [
               ShowUpAnimation(
                   animationDuration: const Duration(milliseconds: 250),
@@ -29,7 +29,6 @@ class BenefitsWidget extends StatelessWidget {
                   delayStart: Duration.zero,
                   child: TextFieldCustom(
                     controller: provider.controllers[index],
-                    key: UniqueKey(),
                     text: '${context.loc.benefit} ${index + 1}',
                     icon: provider.benefits.length == 1 ? null : Icons.delete,
                     iconColor: Colors.red,
@@ -43,7 +42,7 @@ class BenefitsWidget extends StatelessWidget {
               const SizedBox(height: 2),
               if (index == provider.benefits.length - 1)
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: SharedPreferencesManager().isArabic() ? Alignment.centerLeft : Alignment.centerRight,
                   child: GestureDetector(
                     onTap: () {
                       provider.addBenefit();

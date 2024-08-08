@@ -19,6 +19,10 @@ class SharedPreferencesManager {
     await _preferences?.setString(key, value);
   }
 
+  bool containsKey(String key) {
+    return _preferences?.containsKey(key) ?? false;
+  }
+
   // Retrieve a string
   String? getString(String key) {
     return _preferences?.getString(key);
@@ -72,5 +76,13 @@ class SharedPreferencesManager {
   // Clear all keys
   Future<void> clear() async {
     await _preferences?.clear();
+  }
+
+  bool isArabic() {
+    if (!_preferences!.containsKey('language')) {
+      return true;
+    } else {
+      return _preferences!.containsKey('language') && _preferences!.getString('language') == 'ar';
+    }
   }
 }

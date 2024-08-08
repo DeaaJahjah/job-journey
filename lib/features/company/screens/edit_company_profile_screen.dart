@@ -1,36 +1,34 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/drop_down_custom.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/core/services/file_services.dart';
 import 'package:job_journey/core/utils/shared_pref.dart';
-import 'package:job_journey/features/auth/Services/authentecation_service.dart';
 import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
-import 'package:job_journey/home_screen.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 
-class ComapnySignUpScreen extends StatefulWidget {
-  static const String routeName = '/sign-up';
-  const ComapnySignUpScreen({super.key});
+class EditCompanyProfileScreen extends StatefulWidget {
+  static const String routeName = '/edit-company-profile-screen';
+  const EditCompanyProfileScreen({super.key});
 
   @override
-  State<ComapnySignUpScreen> createState() => _ComapnySignUpScreenState();
+  State<EditCompanyProfileScreen> createState() => _EditCompanyProfileScreenState();
 }
 
-class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
+class _EditCompanyProfileScreenState extends State<EditCompanyProfileScreen> {
   TextEditingController userName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -45,6 +43,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
   XFile? pickedimage;
   String fileName = '';
   File? imageFile;
+  String? imageUrl;
   var formKey = GlobalKey<FormState>();
   bool isLoading = false;
   _pickImage() async {
@@ -61,12 +60,27 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
   }
 
   @override
+  void initState() {
+    final company = context.read<CompanyProvider>().profile!;
+    userName = TextEditingController(text: company.name);
+    email = TextEditingController(text: company.email);
+    passwordController = TextEditingController(text: company.password);
+    location = TextEditingController(text: company.location);
+    phoneController = TextEditingController(text: company.phoneNumber);
+    foundingDate = TextEditingController(text: company.foundingDate);
+    description = TextEditingController(text: company.description);
+    imageUrl = company.profilePicture;
+    selectedIndustry = company.industry;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text(context.loc.createCompany, style: appBarTextStyle),
+        title: Text(context.loc.editProfile, style: appBarTextStyle),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -82,14 +96,19 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                     setState(() {});
                   },
                   child: (pickedimage == null)
-                      ? Container(
-                          decoration: BoxDecoration(color: gray, borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.all(25),
-                          child: Image.asset(
-                            'assets/images/select_img.png',
-                            width: 75,
-                          ),
-                        )
+                      ? imageUrl == null
+                          ? Container(
+                              decoration: BoxDecoration(color: gray, borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(25),
+                              child: Image.asset(
+                                'assets/images/select_img.png',
+                                width: 75,
+                              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(color: gray, borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(20),
+                              child: Image.network(imageUrl!))
                       : Container(
                           decoration: BoxDecoration(color: gray, borderRadius: BorderRadius.circular(10)),
                           padding: const EdgeInsets.all(20),
@@ -149,7 +168,18 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
               const SizedBox(
                 height: 20,
               ),
-              TextFieldCustom(text: context.loc.location, controller: location, icon: Icons.location_on),
+              DropDownCustom(
+                hint: context.loc.location,
+                icon: Icons.location_on,
+                categories: cities,
+                selectedItem: location.text,
+                onChanged: (item) {
+                  setState(() {
+                    location.text = item ?? '';
+                  });
+                },
+              ),
+              // TextFieldCustom(text: context.loc.location, controller: location, icon: Icons.location_on),
               const SizedBox(
                 height: 20,
               ),
@@ -167,10 +197,8 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
               DropDownCustom(
                 hint: context.loc.industry,
                 icon: Icons.business_center_rounded,
-                categories: industries
-                    .map((e) => SharedPreferencesManager().isArabic() ? e.name : e.enName)
-                    .toList(), // jobTypes,
-                selectedItem: selectedIndustry?.name,
+                categories: industries.map((e) => SharedPreferencesManager().isArabic() ? e.name : e.enName).toList(),
+                selectedItem: SharedPreferencesManager().isArabic() ? selectedIndustry?.name : selectedIndustry?.enName,
                 onChanged: (item) {
                   setState(() {
                     selectedIndustry = industries.getCategory(item!);
@@ -201,7 +229,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                       textColor: white,
                       onPressed: () async {
                         if (formKey.currentState!.validate() && selectedIndustry != null) {
-                          if (imageFile == null) {
+                          if (imageUrl == null && imageFile == null) {
                             var snackBar = const SnackBar(content: Text('الرجاء اخيار صورة'));
                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             return;
@@ -214,42 +242,42 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           });
                           final comProvider = context.read<CreateUpdateCompanyProvider>();
 
-                          final re = await FlutterFireAuthServices()
-                              .signUp(email: email.text, password: passwordController.text, context: context);
-
-                          if (re == null) {
-                            setState(() {
-                              isLoading = false;
-                            });
+                          // final re = await FlutterFireAuthServices()
+                          //     .(email: email.text, password: passwordController.text, context: context);
+                          try {
+                            await context.firebaseUser?.updatePassword(passwordController.text);
+                            await context.firebaseUser!.verifyBeforeUpdateEmail(email.text);
+                            await context.firebaseUser!.updateDisplayName(userName.text);
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'requires-recent-login') {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              showErrorSnackBar(
+                                  context,
+                                  SharedPreferencesManager().isArabic()
+                                      ? "تحديث الملف الشخصي يحتاج تسجيل دخول حديث \n يرجى إعادة تسجيل الدخل قبل القيام بهذه العملية."
+                                      : "This operation needs a recent-login please log out and login again to complete updating your profile.");
+                            }
+                            print('auth exception' + e.message.toString());
                             return;
                           }
-
-                          context.firebaseUser!.updateDisplayName(userName.text);
-
                           //set user type
                           context.firebaseUser!.updatePhotoURL('company');
 
-                          String? imageUrl;
+                          String? resultUrl;
 
                           if (imageFile != null) {
                             imageUrl = await FileDbService().uploadeimage(fileName, imageFile!, context);
                           }
 
-                          await FirebaseChatCore.instance.createUserInFirestore(
-                            types.User(
-                              firstName: userName.text,
-                              id: re.user!.uid,
-                              lastName: '',
-                            ),
-                          );
-
                           //TODO:: create company
-                          await comProvider.createCompany(
+                          await comProvider.updateCompany(
                               company: CompanyModel(
                                   id: context.firebaseUser!.uid,
                                   name: userName.text,
                                   phoneNumber: phoneController.text,
-                                  profilePicture: imageUrl,
+                                  profilePicture: resultUrl ?? imageUrl,
                                   email: email.text,
                                   password: passwordController.text,
                                   industry: selectedIndustry!,
@@ -265,14 +293,13 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           } else {
                             await context.read<CompanyProvider>().getCompanyProfile(userId: context.firebaseUser!.uid);
                           }
-
-                          Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+                          Navigator.of(context).pop();
                         } else {
                           var snackBar = SnackBar(content: Text(context.loc.allFieldsRequired));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
-                      text: context.loc.create,
+                      text: context.loc.save,
                     )
                   : const Center(
                       child: CircularProgressIndicator(

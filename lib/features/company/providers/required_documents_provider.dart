@@ -5,8 +5,11 @@ class RequiredDocumentsProvider with ChangeNotifier {
   List<Helper> documents = [const Helper(id: 0, text: ''), const Helper(id: 1, text: '')];
 
   setdocuments(List<String> documents) {
+    if (documents.isEmpty) return;
+    this.documents.clear();
+    controllers.clear();
+
     for (int i = 0; i < documents.length; i++) {
-      this.documents.clear();
       this.documents.add(Helper(id: i, text: documents[i]));
       controllers.add(TextEditingController(text: documents[i]));
     }

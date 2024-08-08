@@ -17,13 +17,13 @@ class _SelectAccountTypeScreenState extends State<SelectAccountTypeScreen> {
   int selectedType = -1;
   @override
   Widget build(BuildContext context) {
-    final types = ['شركة', 'باحث عن عمل'];
+    final types = [context.loc.comapny, context.loc.jobSeekar];
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('اختر نوع الحساب', style: largTextStyle.copyWith(fontSize: 20)),
+          Text(context.loc.selectAccountType, style: largTextStyle.copyWith(fontSize: 20)),
           sizedBoxLarge,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),

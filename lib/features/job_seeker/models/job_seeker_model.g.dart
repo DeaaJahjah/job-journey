@@ -19,7 +19,7 @@ JobSeekerModel _$JobSeekerModelFromJson(Map<String, dynamic> json) => JobSeekerM
       skills: (json['skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       softSkills: (json['soft_skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       languages: (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      topicsSubscription: (json['topics_subscription'] as List<dynamic>?)?.map((e) => Category.fromJson(e)).toList(),
+      topicsSubscription: (json['topics_subscriptions'] as List<dynamic>?)?.map((e) => Category.fromJson(e)).toList(),
       createdAt: json['created_at'] as String?,
 
     );
@@ -37,6 +37,6 @@ Map<String, dynamic> _$JobSeekerModelToJson(JobSeekerModel instance) => <String,
       'skills': instance.skills,
       'soft_skills': instance.softSkills,
       'languages': instance.languages,
-      'topics_subscription': instance.topicsSubscription?.map((e) => e.toJson()).toList(),
+      'topics_subscriptions': instance.topicsSubscription?.map((e) => e.toJson()).toList(),
       'created_at': instance.createdAt
     };

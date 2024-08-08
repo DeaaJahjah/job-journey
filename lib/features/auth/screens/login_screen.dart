@@ -110,16 +110,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            'ليس لديك حساب؟',
-                            style: TextStyle(color: white, fontSize: 16, fontFamily: font),
+                          Text(
+                            context.loc.dontHaveAnAccount,
+                            style: const TextStyle(color: white, fontSize: 16, fontFamily: font),
                           ),
                           const SizedBox(
                             width: 5,
                           ),
                           TextButton(
-                            child: const Text('انضم الينا',
-                                style: TextStyle(
+                            child: Text(context.loc.joinUs,
+                                style: const TextStyle(
                                     color: blue, fontSize: 16, fontFamily: font, fontWeight: FontWeight.bold)),
                             onPressed: () {
                               Navigator.of(context).pushNamed(SelectAccountTypeScreen.routeName);
