@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
+import 'package:job_journey/features/applications/services/pdf_service.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
 
-class ApplicationDetailsBottomSheet extends StatelessWidget {
+class ApplicationDetailsBottomSheet extends StatefulWidget {
   const ApplicationDetailsBottomSheet({
     super.key,
     required this.application,
@@ -13,6 +15,12 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
   final JobSeekerModel application;
 
   @override
+  State<ApplicationDetailsBottomSheet> createState() => _ApplicationDetailsBottomSheetState();
+}
+
+class _ApplicationDetailsBottomSheetState extends State<ApplicationDetailsBottomSheet> {
+  bool isGeneratingPdf = false;
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -20,7 +28,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            application.name,
+            widget.application.name,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
           ),
           sizedBoxMedium,
@@ -32,7 +40,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  application.location,
+                  widget.application.location,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 ),
               ),
@@ -45,7 +53,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: white),
               ),
               Text(
-                application.phoneNumber,
+                widget.application.phoneNumber,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
               ),
             ],
@@ -57,7 +65,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white),
               ),
               Text(
-                application.email,
+                widget.application.email,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
               ),
             ],
@@ -68,7 +76,7 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white),
           ),
           Text(
-            application.summary,
+            widget.application.summary,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
           ),
           sizedBoxSmall,
@@ -79,9 +87,9 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: application.skills?.length ?? 0,
+            itemCount: widget.application.skills?.length ?? 0,
             itemBuilder: (context, index) => Text(
-              application.skills?[index] ?? '',
+              widget.application.skills?[index] ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
           ),
@@ -93,9 +101,9 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: application.softSkills?.length ?? 0,
+            itemCount: widget.application.softSkills?.length ?? 0,
             itemBuilder: (context, index) => Text(
-              application.softSkills?[index] ?? '',
+              widget.application.softSkills?[index] ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
           ),
@@ -107,9 +115,9 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: application.certificates?.length ?? 0,
+            itemCount: widget.application.certificates?.length ?? 0,
             itemBuilder: (context, index) => Text(
-              application.certificates?[index] ?? '',
+              widget.application.certificates?[index] ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
           ),
@@ -121,21 +129,31 @@ class ApplicationDetailsBottomSheet extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: application.languages?.length ?? 0,
+            itemCount: widget.application.languages?.length ?? 0,
             itemBuilder: (context, index) => Text(
-              application.languages?[index] ?? '',
+              widget.application.languages?[index] ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
             ),
           ),
           sizedBoxMedium,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: ElevatedButtonCustom(
-                showIcon: true,
-                textColor: white,
-                blueGradientButton: false,
-                onPressed: () {},
-                text: context.loc.downloadPdf),
+            child: isGeneratingPdf
+                ? const Center(child: SizedBox(height: 50, width: 50, child: CustomProgress()))
+                : ElevatedButtonCustom(
+                    showIcon: true,
+                    textColor: white,
+                    blueGradientButton: false,
+                    onPressed: () async {
+                      setState(() {
+                        isGeneratingPdf = true;
+                      });
+                      await generatePdf(widget.application);
+                      setState(() {
+                        isGeneratingPdf = false;
+                      });
+                    },
+                    text: context.loc.downloadPdf),
           ),
         ],
       ),
