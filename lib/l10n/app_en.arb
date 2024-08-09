@@ -81,5 +81,7 @@
     "dontHaveAnAccount": "Do not have an account?",
     "anErrorAccourdWhileCreatingChat": "An error accourd while creating chat",
     "allFieldsRequired": "All fields are required",
-    "editProfile": "Edit profile"
+    "editProfile": "Edit profile",
+    "showSuggestions":"Show Suggestions"
+
 }

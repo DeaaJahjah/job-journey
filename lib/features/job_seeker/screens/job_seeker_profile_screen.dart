@@ -7,11 +7,11 @@ import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
+import 'package:job_journey/features/job_seeker/providers/analyze_profile_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/features/job_seeker/screens/analyze_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/edit_job_seeker_profile_screen.dart';
 import 'package:job_journey/features/job_seeker/screens/profile_without_shimmer.dart';
-import 'package:job_journey/features/job_seeker/services/analyze_profile_service.dart';
 import 'package:provider/provider.dart';
 
 class JobSeekerProfileScreen extends StatefulWidget {
@@ -341,182 +341,7 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
                             style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
                           ),
                         ),
-                    ]))),
-        // const Divider(
-        //   color: Colors.grey,
-        //   endIndent: 20,
-        //   indent: 20,
-        //   thickness: .5,
-        // ),
-                      Row(
-                        children: [
-                          const Icon(Icons.bar_chart_rounded, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          Text(
-                            context.loc.skills,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.skills?.length ?? 0,
-                              itemBuilder: (context, index) => Row(
-                                    children: [
-                                      Container(
-                                        height: 8,
-                                        width: 8,
-                                        decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                            widget.profile.skills?[index] ?? '',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(color: white, letterSpacing: 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ))),
-                      const Divider(
-                        color: Colors.grey,
-                        endIndent: 20,
-                        indent: 20,
-                        thickness: .5,
-                      ),
-                      sizedBoxSmall,
-                      Row(
-                        children: [
-                          const Icon(Icons.handshake_rounded, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          Text(
-                            context.loc.softSkills,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.softSkills?.length ?? 0,
-                              itemBuilder: (context, index) => Row(
-                                    children: [
-                                      Container(
-                                        height: 8,
-                                        width: 8,
-                                        decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                            widget.profile.softSkills?[index] ?? '',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(color: white, letterSpacing: 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ))),
-
-                      const Divider(
-                        color: Colors.grey,
-                        endIndent: 20,
-                        indent: 20,
-                        thickness: .5,
-                      ),
-                      sizedBoxSmall,
-                      Row(
-                        children: [
-                          const Icon(Icons.school_rounded, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          Text(
-                            context.loc.certificates,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.certificates?.length ?? 0,
-                              itemBuilder: (context, index) => Row(
-                                    children: [
-                                      Container(
-                                        height: 8,
-                                        width: 8,
-                                        decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                            widget.profile.certificates?[index] ?? '',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(color: white, letterSpacing: 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ))),
-
-                      const Divider(
-                        color: Colors.grey,
-                        endIndent: 20,
-                        indent: 20,
-                        thickness: .5,
-                      ),
-                      sizedBoxSmall,
-                      Row(
-                        children: [
-                          const Icon(Icons.language, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          Text(
-                            context.loc.languages,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.languages?.length ?? 0,
-                          itemBuilder: (context, index) => Row(
-                            children: [
-                              Container(
-                                height: 8,
-                                width: 8,
-                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Text(
-                            widget.profile.languages?[index] ?? '',
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
-                                ),
-                              ),
-                            ],
-                      
+                      ],
                     ))),
         const Divider(
           color: Colors.grey,
@@ -525,42 +350,39 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
           thickness: .5,
         ),
         sizedBoxSmall,
-        
-                      Row(
-                        children: [
-                          const Icon(Icons.category_rounded, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          Text(
-                            context.loc.topicsSubscription,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.topicsSubscription?.length ?? 0,
-                          itemBuilder: (context, index) => Row(
-                            children: [
-                              Container(
-                                height: 8,
-                                width: 8,
-                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Text(
-                            widget.profile.topicsSubscription?[index].name ?? '',
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
-                                ),
-                              ),
-                            ],
+        Row(
+          children: [
+            const Icon(Icons.handshake_rounded, color: Colors.grey),
+            const SizedBox(width: 5),
+            Text(
+              context.loc.softSkills,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white),
+            ),
+          ],
+        ),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.profile.softSkills?.length ?? 0,
+                itemBuilder: (context, index) => Row(
+                      children: [
+                        Container(
+                          height: 8,
+                          width: 8,
+                          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          widget.profile.softSkills?[index] ?? '',
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                        ),
+                      ],
                     ))),
+
         const Divider(
           color: Colors.grey,
           endIndent: 20,
@@ -610,7 +432,7 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
         sizedBoxSmall,
         Row(
           children: [
-            const Icon(Icons.school_rounded, color: Colors.grey),
+            const Icon(Icons.language, color: Colors.grey),
             const SizedBox(width: 5),
             Text(
               context.loc.languages,

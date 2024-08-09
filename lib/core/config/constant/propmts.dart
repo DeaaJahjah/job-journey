@@ -1,5 +1,10 @@
+import 'package:job_journey/core/utils/shared_pref.dart';
+
 class Propmts {
-  static const analyzeProfile =
+  static const translateToArabic = 'Translate the previous response to arabic';
+  static const translateToEnglish = 'Translate the previous response to english';
+
+  static final analyzeProfile =
       '''Evaluate the provided resume and provide a JSON formatted response Provide the JSON response without any enclosing characters or formatting containing the following:
 
         generalRating: Overall assessment of the resume's effectiveness (scale of 1-10), considering factors such as formatting, clarity, and overall presentation.
@@ -14,7 +19,7 @@ class Propmts {
         improvements: A list of suggested improvements, if any. If no improvements are necessary, the "improvements" array should be empty. if the "improvements" array is empty the rating should be 10 
         suggestions: A list of Contains the final shape after applying improvements to it.
               notes this a json response tamplete you should return.
-             Note: the "suggestions" and "improvements" array shoud be in arabic 
+             Note: the "suggestions" and "improvements" array should be in ${SharedPreferencesManager().isArabic() ? 'Arabic' : 'English'} 
                                     {
                                       "generalRating": ,
                                       "summary_rating": {

@@ -82,5 +82,6 @@
     "dontHaveAnAccount": "ليس لديك حساب؟",
     "anErrorAccourdWhileCreatingChat": "حدث خطأ أثناء انشاء الدردشة",
     "allFieldsRequired": "جميع الحقول مطلوبة",
-    "editProfile": "تعديل الملف الشخصي"
+    "editProfile": "تعديل الملف الشخصي",
+    "showSuggestions":"عرض الاقتراحات"
 }

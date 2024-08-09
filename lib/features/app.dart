@@ -6,13 +6,14 @@ import 'package:job_journey/core/settings/language_provider.dart';
 import 'package:job_journey/features/applications/providers/applications_provider.dart';
 import 'package:job_journey/features/apply_for_job/providers/apply_provider.dart';
 import 'package:job_journey/features/chat/chat_provider.dart';
+import 'package:job_journey/features/chat/providers/video_call_provider.dart';
 import 'package:job_journey/features/company/providers/benfits_provider.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/providers/create_update_company_provider.dart';
 import 'package:job_journey/features/company/providers/required_documents_provider.dart';
 import 'package:job_journey/features/company/providers/requirements_provider.dart';
+import 'package:job_journey/features/job_seeker/providers/analyze_profile_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
-import 'package:job_journey/features/job_seeker/services/analyze_profile_service.dart';
 import 'package:provider/provider.dart';
 // import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
@@ -33,7 +34,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<ApplayProvider>(create: (_) => ApplayProvider()),
         ChangeNotifierProvider<ApplicationsProvider>(create: (_) => ApplicationsProvider()),
         ChangeNotifierProvider<AnalyzeProfileProvider>(create: (_) => AnalyzeProfileProvider()),
+        ChangeNotifierProvider<VideoCallProvider>(create: (_) => VideoCallProvider()),
 
+        
         
       ],
       child: Builder(builder: (context) {
@@ -60,6 +63,8 @@ class App extends StatelessWidget {
             theme: ThemeData(
                 brightness: Brightness.light,
                 primaryColor: blue,
+                iconTheme: const IconThemeData(color: purple),
+                
                 scaffoldBackgroundColor: background,
                 appBarTheme: const AppBarTheme(
                     backgroundColor: background,

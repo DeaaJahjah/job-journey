@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/core/config/constant/propmts.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/core/keys.dart';
+import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/apply_for_job/screens/application_details_widget.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
@@ -66,7 +68,7 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
     _chat = _model.startChat();
 
     String prompt =
-        '''Generate a JSON formatted CV based on the provided job description (text format) and user information (JSON format). 
+        '''Generate a JSON formatted CV based on the provided job description. 
               Adhere strictly to the job description's requirements and use the following CV structure:
                 {
                   "name": "",
@@ -86,7 +88,8 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
     prompt += '\nnote do not add a json word before the response';
     prompt += '\nnote add arabic and english languages to languages list of String';
     prompt += '\nnote add university certificate to certificates list of String';
-
+    prompt +=
+        '\nNote the response should be in should be in ${SharedPreferencesManager().isArabic() ? 'Arabic' : 'English'}';
 
     prompt += widget.job!.toJson().toString();
     _generatedContent.add((image: null, text: 'انشئ سيرة ذاتية', fromUser: true));
@@ -186,7 +189,7 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
                             _scrollDown();
                             _animationTrigger();
                             setState(() {});
-                            await _sendChatMessage('translate the previous response to arabic');
+                            await _sendChatMessage(Propmts.translateToArabic);
                             _scrollDown();
                           },
                           text: context.loc.translateToArabic,
@@ -202,7 +205,7 @@ class _ChatWidgetState extends State<ChatWidget> with SingleTickerProviderStateM
                             _animationTrigger();
 
                             setState(() {});
-                            await _sendChatMessage('translate the previous response to english');
+                            await _sendChatMessage(Propmts.translateToEnglish);
                             _scrollDown();
                           },
                           text: context.loc.translateToEnglish,

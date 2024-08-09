@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/features/auth/screens/login_screen.dart';
+import 'package:job_journey/features/chat/providers/video_call_provider.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/job_seeker/providers/job_seeker_provider.dart';
 import 'package:job_journey/home_screen.dart';
@@ -24,6 +25,9 @@ class SplashScreen extends StatelessWidget {
       if (context.firebaseUser != null) {
         // print('user type :${context.firebaseUser!.photoURL}');
         print('firebaseUse ${context.firebaseUser!.photoURL}');
+        
+        context.read<VideoCallProvider>().getAgoraSetup();
+
         if (context.firebaseUser!.photoURL != 'company') {
           await context.read<JobSeekerProvider>().getJobSeeker(userId: context.firebaseUser!.uid);
         } else {

@@ -13,6 +13,7 @@ import 'package:job_journey/core/config/widgets/text_field_custome.dart';
 import 'package:job_journey/core/services/file_services.dart';
 import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/auth/Services/authentecation_service.dart';
+import 'package:job_journey/features/chat/providers/video_call_provider.dart';
 import 'package:job_journey/features/company/models/category.dart';
 import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
@@ -265,6 +266,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
                           } else {
                             await context.read<CompanyProvider>().getCompanyProfile(userId: context.firebaseUser!.uid);
                           }
+                          context.read<VideoCallProvider>().getAgoraSetup();
 
                           Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
                         } else {

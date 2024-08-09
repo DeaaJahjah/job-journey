@@ -23,17 +23,21 @@ class AnalyzeProfileProvider extends ChangeNotifier {
   Future<void> analyzeMyProfile({required String cv}) async {
     dataState = DataState.loading;
     notifyListeners();
-    final response = await _chat.sendMessage(
-      Content.text(Propmts.analyzeProfile + cv),
-    );
+    try {
+      final response = await _chat.sendMessage(
+        Content.text(Propmts.analyzeProfile + cv),
+      );
 
-    if (response.text == null) {
+      if (response.text == null) {
+        dataState = DataState.failure;
+      } else {
+        data = response.text!;
+        dataState = DataState.done;
+      }
+      notifyListeners();
+    } catch (e) {
       dataState = DataState.failure;
-    } else {
-      print(response.text);
-      data = response.text!;
-      dataState = DataState.done;
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

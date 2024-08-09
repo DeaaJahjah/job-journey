@@ -33,25 +33,31 @@ class _AnalyzeProfileScreenState extends State<AnalyzeProfileScreen> {
           padding: const EdgeInsets.all(8.0),
           children: [
             Container(
-                height: 100,
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(horizontal: 60),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(60),
-                  gradient: const LinearGradient(begin: Alignment.centerLeft, colors: [lightpurple, purple]),
-                ),
-                child: Text(
-                  '${analysisResualt.generalRating}/10',
-                  style: largTextStyle.copyWith(color: white, fontSize: 26),
-                )).animate().scale().fadeIn(),
-            sizedBoxMedium,
-            const Align(
-              alignment: Alignment.center,
-              child: Text(
-                'التقييم الكلي لملفك الشخصي',
-                style: largTextStyle,
+              margin: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * .1),
+              child: Image.asset(
+                'assets/images/profile_analyze.png',
               ),
             ),
+            // Container(
+            //     height: 100,
+            //     alignment: Alignment.center,
+            //     margin: const EdgeInsets.symmetric(horizontal: 60),
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(60),
+            //       gradient: const LinearGradient(begin: Alignment.centerLeft, colors: [lightpurple, purple]),
+            //     ),
+            //     child: Text(
+            //       '${analysisResualt.generalRating}/10',
+            //       style: largTextStyle.copyWith(color: white, fontSize: 26),
+            //     )).animate().scale().fadeIn(),
+            // sizedBoxMedium,
+            // const Align(
+            //   alignment: Alignment.center,
+            //   child: Text(
+            //     'التقييم الكلي لملفك الشخصي',
+            //     style: largTextStyle,
+            //   ),
+            // ),
             sizedBoxLarge,
             const Align(
               alignment: Alignment.centerRight,
@@ -243,19 +249,19 @@ class ImprovmentSectionCard extends StatelessWidget {
                                 gradient:
                                     const LinearGradient(begin: Alignment.centerLeft, colors: [lightpurple, purple]),
                               ),
-                              child: const Text(
-                                'عرض الاقتراحات',
+                              child: Text(
+                                context.loc.showSuggestions,
                                 style: smallTextStyle,
                               ),
                             ),
                           ),
                   ],
                 ),
-                const Spacer(),
-                Text(
-                  '${rating!.rating}/10',
-                  style: smallTextStyle,
-                ),
+                // const Spacer(),
+                // Text(
+                //   '${rating!.rating}/10',
+                //   style: smallTextStyle,
+                // ),
               ],
             ).animate().fade().slideX(),
           );

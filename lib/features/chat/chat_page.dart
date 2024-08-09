@@ -10,6 +10,7 @@ import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
+import 'package:job_journey/features/chat/video_call_screen.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -39,7 +40,6 @@ class _ChatPageState extends State<ChatPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -235,6 +235,36 @@ class _ChatPageState extends State<ChatPage> {
         appBar: AppBar(
           // systemOverlayStyle: SystemUiOverlayStyle.light,
           title: Text(widget.room.name ?? 'الدردشة'),
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(VideoCallScreen.routeName);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [lightpurple, purple])),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Meeting',
+                        style: smallTextStyle.copyWith(fontSize: 12),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Icon(
+                        Icons.call,
+                        size: 15,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ]
         ),
         backgroundColor: background,
         body: StreamBuilder<types.Room>(

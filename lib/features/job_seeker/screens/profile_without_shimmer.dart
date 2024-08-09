@@ -216,7 +216,7 @@ class ProfileBodyWithOutShimer extends StatelessWidget {
         sizedBoxSmall,
         Row(
           children: [
-            const Icon(Icons.school_rounded, color: Colors.grey),
+            const Icon(Icons.language, color: Colors.grey),
             const SizedBox(width: 5),
             Text(
               context.loc.languages,
