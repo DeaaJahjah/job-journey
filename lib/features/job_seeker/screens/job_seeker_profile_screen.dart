@@ -4,6 +4,7 @@ import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/chat_button.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/features/job_seeker/models/job_seeker_model.dart';
@@ -69,7 +70,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> with Si
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white, fontWeight: FontWeight.bold),
               ),
               actions: [
-                if (!context.isCompanyAccount)
+                if (context.isCompanyAccount) ...[const ChatButton(fromProfile: true)] else
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed(EditJobSeekerProfileScreen.routeName);
@@ -376,9 +377,11 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          widget.profile.softSkills?[index] ?? '',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                        Expanded(
+                          child: Text(
+                            widget.profile.softSkills?[index] ?? '',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                          ),
                         ),
                       ],
                     ))),
@@ -401,27 +404,31 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
           ],
         ),
         Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.profile.certificates?.length ?? 0,
-                itemBuilder: (context, index) => Row(
-                      children: [
-                        Container(
-                          height: 8,
-                          width: 8,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          widget.profile.certificates?[index] ?? '',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
-                        ),
-                      ],
-                    ))),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.profile.certificates?.length ?? 0,
+            itemBuilder: (context, index) => Row(
+              children: [
+                Container(
+                  height: 8,
+                  width: 8,
+                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Expanded(
+                  child: Text(
+                    widget.profile.certificates?[index] ?? '',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
 
         const Divider(
           color: Colors.grey,
@@ -456,9 +463,11 @@ class _ProfileBodyWithShimerState extends State<ProfileBodyWithShimer> with Sing
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  widget.profile.languages?[index] ?? '',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                Expanded(
+                  child: Text(
+                    widget.profile.languages?[index] ?? '',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                  ),
                 ),
               ],
             ),

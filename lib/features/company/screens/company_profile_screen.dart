@@ -3,6 +3,7 @@ import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
+import 'package:job_journey/core/config/widgets/chat_button.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/utils/shared_pref.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
@@ -45,6 +46,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
             );
           }
           final profile = provider.profile!;
+          // print(profile.location);
           return CustomScrollView(slivers: <Widget>[
             SliverAppBar(
               title: Text(
@@ -52,7 +54,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white, fontWeight: FontWeight.bold),
               ),
               actions: [
-                if (context.isCompanyAccount)
+                if (!context.isCompanyAccount) ...[const ChatButton(fromProfile: true)] else
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed(EditCompanyProfileScreen.routeName);
@@ -151,7 +153,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 3.0),
                                     child: Text(
-                                      profile.foundingDate,
+                                      profile.foundingDate.length > 10
+                                          ? profile.foundingDate.substring(0, 10)
+                                          : profile.foundingDate,
                                       style:
                                           Theme.of(context).textTheme.bodySmall?.copyWith(color: white, fontSize: 14),
                                     ),

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
-import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/chat_button.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
-import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
 import 'package:job_journey/core/config/widgets/elevated_button_custom.dart';
 import 'package:job_journey/features/applications/providers/applications_provider.dart';
 import 'package:job_journey/features/applications/widgets/application_details_widget.dart';
-import 'package:job_journey/features/chat/chat_page.dart';
 import 'package:job_journey/features/chat/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -145,22 +142,7 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                           child: Row(
                             children: [
                               Consumer<ChatProvider>(builder: (_, provider, child) {
-                                return ChatButton(onTap: () async {
-                                  await provider.createChatRoom(
-                                      userId: context.firebaseUser!.uid, userName: context.firebaseUser!.displayName!);
-
-                                  if (provider.dataState == DataState.done) {
-                                    await Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatPage(
-                                          room: provider.room!,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    showErrorSnackBar(context, context.loc.anErrorAccourdWhileCreatingChat);
-                                  }
-                                });
+                                return const ChatButton();
                               }),
                               const SizedBox(width: 5),
                               Expanded(

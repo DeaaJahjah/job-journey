@@ -7,6 +7,8 @@ import 'package:job_journey/features/company/services/company_db_service.dart';
 class CompanyProvider with ChangeNotifier {
   DataState dataState = DataState.notSet;
   List<JobModel> myJobs = [];
+  List<JobModel> searchList = [];
+  bool isSearching = false;
   CompanyModel? profile;
   JobModel? jobDetails;
 
@@ -100,5 +102,58 @@ class CompanyProvider with ChangeNotifier {
       dataState = DataState.done;
       notifyListeners();
     }
+  }
+
+  void searchAndFilter({String? city, String? jobType, String? search}) {
+    searchList.clear();
+    if (city != null) {
+      for (var job in myJobs) {
+        if (job.location == city && (!searchList.contains(job))) {
+          if (jobType != null) {
+            if (job.jobType == jobType) searchList.add(job);
+          } else {
+            searchList.add(job);
+          }
+        }
+      }
+    }
+    if (jobType != null) {
+      for (var job in myJobs) {
+        if (job.jobType == jobType && (!searchList.contains(job))) {
+          if (city != null) {
+            if (city == job.location) searchList.add(job);
+          } else {
+            searchList.add(job);
+          }
+        }
+      }
+    }
+
+    if (search != null && search.isNotEmpty) {
+      if (city == null && jobType == null) {
+        for (var job in myJobs) {
+          if (job.title == search ||
+              job.title.startsWith(search) ||
+              job.title.contains(search) && (!searchList.contains(job))) {
+            searchList.add(job);
+          }
+        }
+      } else {
+        if (searchList.isNotEmpty) {
+          searchList.removeWhere(
+              (job) => (job.title != search && !job.title.startsWith(search) && !job.title.contains(search)));
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void changeSearch(bool state) {
+    isSearching = state;
+    notifyListeners();
+  }
+
+  void clearSearch() {
+    searchList.clear();
   }
 }

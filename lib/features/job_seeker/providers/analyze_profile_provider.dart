@@ -5,8 +5,8 @@ import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/core/keys.dart';
 
 class AnalyzeProfileProvider extends ChangeNotifier {
-  late final GenerativeModel _model;
-  late final ChatSession _chat;
+  GenerativeModel? _model;
+  ChatSession? _chat;
   DataState dataState = DataState.notSet;
 
   String data = '';
@@ -17,14 +17,14 @@ class AnalyzeProfileProvider extends ChangeNotifier {
       apiKey: GEMINI_KEY,
     );
 
-    _chat = _model.startChat();
+    _chat = _model!.startChat();
   }
 
   Future<void> analyzeMyProfile({required String cv}) async {
     dataState = DataState.loading;
     notifyListeners();
     try {
-      final response = await _chat.sendMessage(
+      final response = await _chat!.sendMessage(
         Content.text(Propmts.analyzeProfile + cv),
       );
 

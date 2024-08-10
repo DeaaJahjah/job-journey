@@ -26,7 +26,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
         client = AgoraClient(
           agoraConnectionData: AgoraConnectionData(
-            appId: AGORA_APP_ID,
+            appId: "17c70c58e595438abdb8aee90fa22fbf",
             channelName: agoraSetupModel!.channelName,
             tempToken: agoraSetupModel.tempToken,
           ),
