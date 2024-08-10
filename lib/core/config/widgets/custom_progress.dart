@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 
 class CustomProgress extends StatelessWidget {
-  const CustomProgress({super.key});
+  final Color color;
+  const CustomProgress({super.key, this.color = blue});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
         child: CircularProgressIndicator(
-      color: blue,
-      
+      color: color,
     ));
   }
 }

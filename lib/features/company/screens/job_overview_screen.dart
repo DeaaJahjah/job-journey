@@ -13,6 +13,7 @@ import 'package:job_journey/features/company/models/job_model.dart';
 import 'package:job_journey/features/company/providers/company_provider.dart';
 import 'package:job_journey/features/company/screens/add_job_screen.dart';
 import 'package:job_journey/features/company/screens/company_profile_screen.dart';
+import 'package:job_journey/features/company/screens/filter_search_widget.dart';
 import 'package:job_journey/features/company/screens/job_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -36,31 +37,50 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSearching = context.select<CompanyProvider, bool>((value) => value.isSearching);
     return Scaffold(
       backgroundColor: background,
-      drawer: const CustomDrawer(),
+      drawer: isSearching ? null : const CustomDrawer(),
       appBar: AppBar(
-        title: Text(context.loc.jobs),
+        toolbarHeight: isSearching ? 140 : null,
+        title: const FilterSearchWidget(),
+        actions: [
+          if (!isSearching)
+            InkWell(
+              onTap: () {
+                context.read<CompanyProvider>().changeSearch(true);
+              },
+              child: const Padding(padding: EdgeInsets.all(8.0), child: Icon(Icons.manage_search_rounded)),
+            )
+        ],
       ),
       body: Consumer<CompanyProvider>(builder: (context, provider, _) {
-        final jobs = provider.myJobs;
+        print(provider.myJobs);
+        final jobs = isSearching ? provider.searchList : provider.myJobs;
         return provider.dataState == DataState.loading
             ? const CustomProgress()
-            : ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemCount: jobs.length,
-                itemBuilder: (context, index) {
-                  return ShowUpAnimation(
-                    animationDuration: const Duration(milliseconds: 400),
-                    child: JobCard(
-                      job: jobs[index],
+            : jobs.isEmpty
+                ? Center(
+                    child: Text(
+                      context.loc.noData,
+                      style: largTextStyle,
                     ),
+                  )
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: jobs.length,
+                    itemBuilder: (context, index) {
+                      return ShowUpAnimation(
+                        animationDuration: const Duration(milliseconds: 400),
+                        child: JobCard(
+                          job: jobs[index],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (__, _) {
+                      return const SizedBox(height: 5);
+                    },
                   );
-                },
-                separatorBuilder: (__, _) {
-                  return const SizedBox(height: 5);
-                },
-              );
       }),
       floatingActionButton: !context.isCompanyAccount
           ? null
@@ -123,7 +143,8 @@ class JobCard extends StatelessWidget {
                         bottomRight: SharedPreferencesManager().isArabic() ? Radius.zero : const Radius.circular(10),
                       ),
                       child: Image.network(
-                        "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg",
+                        job.companyPicture ??
+                            "https://marketplace.canva.com/EAFK6GIdp20/1/0/1600w/canva-blue-%26-black-simple-company-logo-nwGjVuSJ-D0.jpg",
                         height: 75,
                       ),
                     ),

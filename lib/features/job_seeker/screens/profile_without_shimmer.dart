@@ -160,9 +160,11 @@ class ProfileBodyWithOutShimer extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          profile.softSkills?[index] ?? '',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                        Expanded(
+                          child: Text(
+                            profile.softSkills?[index] ?? '',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                          ),
                         ),
                       ],
                     ))),
@@ -200,9 +202,11 @@ class ProfileBodyWithOutShimer extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          profile.certificates?[index] ?? '',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                        Expanded(
+                          child: Text(
+                            profile.certificates?[index] ?? '',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                          ),
                         ),
                       ],
                     ))),
@@ -240,9 +244,11 @@ class ProfileBodyWithOutShimer extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  profile.languages?[index] ?? '',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                Expanded(
+                  child: Text(
+                    profile.languages?[index] ?? '',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: white, letterSpacing: 1),
+                  ),
                 ),
               ],
             ),
