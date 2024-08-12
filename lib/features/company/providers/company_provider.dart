@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:flutter/material.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
 import 'package:job_journey/features/company/models/company_model.dart';
 import 'package:job_journey/features/company/models/job_model.dart';
@@ -11,6 +11,9 @@ class CompanyProvider with ChangeNotifier {
   bool isSearching = false;
   CompanyModel? profile;
   JobModel? jobDetails;
+  final search = TextEditingController();
+  String? selectedType;
+  String? selectedCity;
 
   Future<void> getJobs() async {
     dataState = DataState.loading;
@@ -155,5 +158,8 @@ class CompanyProvider with ChangeNotifier {
 
   void clearSearch() {
     searchList.clear();
+    search.clear();
+    selectedType = null;
+    selectedCity = null;
   }
 }

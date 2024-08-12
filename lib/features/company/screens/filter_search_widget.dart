@@ -16,13 +16,11 @@ class FilterSearchWidget extends StatefulWidget {
 }
 
 class _FilterSearchWidgetState extends State<FilterSearchWidget> {
-  final search = TextEditingController();
-  String? selectedType;
-  String? selectedCity;
+  
 
   @override
   void dispose() {
-    search.dispose();
+    context.read<CompanyProvider>().clearSearch();
     super.dispose();
   }
 
@@ -37,17 +35,16 @@ class _FilterSearchWidgetState extends State<FilterSearchWidget> {
                   onChanged: (value) {
                     context
                         .read<CompanyProvider>()
-                        .searchAndFilter(search: value, city: selectedCity, jobType: selectedType);
+                        .searchAndFilter(
+                        search: value,
+                        city: context.read<CompanyProvider>().selectedCity,
+                        jobType: context.read<CompanyProvider>().selectedType);
                   },
-                  controller: search,
+                  controller: context.read<CompanyProvider>().search,
                   text: SharedPreferencesManager().isArabic() ? 'ابحث عن اسم وظيفة' : "Search for job ",
                   icon: Icons.close,
                   onIconTap: () {
-                    setState(() {
-                      selectedCity = null;
-                      selectedType = null;
-                      search.clear();
-                    });
+                    
                     context.read<CompanyProvider>().changeSearch(false);
                     context.read<CompanyProvider>().clearSearch();
                   }).animate().slide(),
@@ -61,13 +58,15 @@ class _FilterSearchWidgetState extends State<FilterSearchWidget> {
                       icon: Icons.location_pin,
                       categories: ['الكل'] + cities,
                       hint: context.loc.location,
-                      selectedItem: selectedCity,
+                      selectedItem: context.watch<CompanyProvider>().selectedCity,
                       onChanged: (item) {
                         setState(() {
-                          selectedCity = item == 'الكل' ? null : item;
+                          context.read<CompanyProvider>().selectedCity = item == 'الكل' ? null : item;
                         });
                         context.read<CompanyProvider>().searchAndFilter(
-                            search: search.text, city: item == 'الكل' ? null : item, jobType: selectedType);
+                            search: context.read<CompanyProvider>().search.text,
+                            city: item == 'الكل' ? null : item,
+                            jobType: context.read<CompanyProvider>().selectedType);
                       },
                     ).animate().slide(
                               begin: Offset(SharedPreferencesManager().isArabic() ? 1.5 : -1.5, 0),
@@ -79,13 +78,15 @@ class _FilterSearchWidgetState extends State<FilterSearchWidget> {
                       icon: Icons.work_rounded,
                       categories: ['الكل'] + jobTypes,
                       hint: context.loc.jobType,
-                      selectedItem: selectedType,
+                      selectedItem: context.watch<CompanyProvider>().selectedType,
                       onChanged: (item) {
                         setState(() {
-                          selectedType = item == 'الكل' ? null : item;
+                          context.read<CompanyProvider>().selectedType = item == 'الكل' ? null : item;
                         });
                         context.read<CompanyProvider>().searchAndFilter(
-                            search: search.text, city: selectedCity, jobType: item == 'الكل' ? null : item);
+                            search: context.read<CompanyProvider>().search.text,
+                            city: context.read<CompanyProvider>().selectedCity,
+                            jobType: item == 'الكل' ? null : item);
                       },
                     ).animate().slide(
                               begin: Offset(SharedPreferencesManager().isArabic() ? -1.5 : 1.5, 0),

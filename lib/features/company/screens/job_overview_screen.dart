@@ -54,34 +54,44 @@ class _JobsOverViewScreenState extends State<JobsOverViewScreen> {
             )
         ],
       ),
-      body: Consumer<CompanyProvider>(builder: (context, provider, _) {
-        print(provider.myJobs);
-        final jobs = isSearching ? provider.searchList : provider.myJobs;
-        return provider.dataState == DataState.loading
-            ? const CustomProgress()
-            : jobs.isEmpty
-                ? Center(
-                    child: Text(
-                      context.loc.noData,
-                      style: largTextStyle,
-                    ),
-                  )
-                : ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: jobs.length,
-                    itemBuilder: (context, index) {
-                      return ShowUpAnimation(
-                        animationDuration: const Duration(milliseconds: 400),
-                        child: JobCard(
-                          job: jobs[index],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (__, _) {
-                      return const SizedBox(height: 5);
-                    },
-                  );
-      }),
+      body: PopScope(
+        canPop: !context.watch<CompanyProvider>().isSearching,
+        onPopInvoked: (didPop) {
+          if (!didPop) {
+            context.read<CompanyProvider>().searchAndFilter(city: null, jobType: null, search: null);
+            context.read<CompanyProvider>().clearSearch();
+            context.read<CompanyProvider>().changeSearch(false);
+          }
+        },
+        child: Consumer<CompanyProvider>(builder: (context, provider, _) {
+          print(provider.myJobs);
+          final jobs = isSearching ? provider.searchList : provider.myJobs;
+          return provider.dataState == DataState.loading
+              ? const CustomProgress()
+              : jobs.isEmpty
+                  ? Center(
+                      child: Text(
+                        context.loc.noData,
+                        style: largTextStyle,
+                      ),
+                    )
+                  : ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: jobs.length,
+                      itemBuilder: (context, index) {
+                        return ShowUpAnimation(
+                          animationDuration: const Duration(milliseconds: 400),
+                          child: JobCard(
+                            job: jobs[index],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (__, _) {
+                        return const SizedBox(height: 5);
+                      },
+                    );
+        }),
+      ),
       floatingActionButton: !context.isCompanyAccount
           ? null
           : FloatingActionButton(
