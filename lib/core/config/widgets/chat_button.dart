@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:job_journey/core/config/constant/constant.dart';
 import 'package:job_journey/core/config/enums/enums.dart';
-import 'package:job_journey/core/config/extensions/firebase.dart';
 import 'package:job_journey/core/config/extensions/loc.dart';
 import 'package:job_journey/core/config/widgets/custom_progress.dart';
 import 'package:job_journey/core/config/widgets/custom_snackbar.dart';
@@ -12,9 +11,14 @@ import 'package:provider/provider.dart';
 
 class ChatButton extends StatelessWidget {
   final bool fromProfile;
+  final String userId;
+  final String userName;
   const ChatButton({
     super.key,
     this.fromProfile = false,
+    required this.userId,
+    required this.userName,
+
   });
 
   @override
@@ -23,7 +27,7 @@ class ChatButton extends StatelessWidget {
         builder: (_, provider, child) => GestureDetector(
               onTap: () async {
                 await provider
-                    .createChatRoom(userId: context.firebaseUser!.uid, userName: context.firebaseUser!.displayName!)
+                    .createChatRoom(userId: userId, userName: userName)
                     .then((_) async {
                   if (provider.dataState == DataState.done) {
                     await Navigator.of(context).push(

@@ -6,12 +6,13 @@ class VideoCallDbService {
 
   Future<AgoraSetupModel?> getAgoraSetup() async {
     try {
-      var query = await _db.collection('agoraSetup').doc('fQmx5eJCEPEjS4L3njf6').get();
+      var query = await _db.collection('agoraSetup').get();
 
       print(query);
 
-      return AgoraSetupModel.fromJson(query.data()!);
-    } on FirebaseException catch (_) {
+      return AgoraSetupModel.fromJson(query.docs[0].data());
+    } on FirebaseException catch (e) {
+      print('aaaaaaaa ${e.toString()}');
       return null;
     }
   }

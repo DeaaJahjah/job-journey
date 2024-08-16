@@ -63,6 +63,8 @@ class JobSeekerModel extends Equatable {
     jobSeeker = jobSeeker.copyWith(id: documentSnapshot.id);
     return jobSeeker;
   }
+
+  
   JobSeekerModel copyWith({
     String? id,
     String? name,

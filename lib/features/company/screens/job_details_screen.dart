@@ -288,7 +288,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Row(
                           children: [
-                            if (!context.isCompanyAccount) ...[const ChatButton(), const SizedBox(width: 10)],
+                            if (!context.isCompanyAccount) ...[
+                              ChatButton(
+                                userId: job.companyId,
+                                userName: job.companyName,
+                              ),
+                              const SizedBox(width: 10)
+                            ],
                             Expanded(
                               child: ElevatedButtonCustom(
                                 onPressed: () {

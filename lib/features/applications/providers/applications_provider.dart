@@ -16,7 +16,7 @@ class ApplicationsProvider with ChangeNotifier {
         },
         onDone: () {},
         (event) {
-          final applications = event.docs.map((snapshot) => JobSeekerModel.fromFirestore(snapshot)).toList();
+          final applications = event.docs.map((snapshot) => JobSeekerModel.fromJson(snapshot.data())).toList();
           this.applications = applications;
           dataState = DataState.done;
           print(applications);

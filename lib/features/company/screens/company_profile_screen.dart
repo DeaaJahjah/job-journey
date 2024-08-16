@@ -54,7 +54,13 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: white, fontWeight: FontWeight.bold),
               ),
               actions: [
-                if (!context.isCompanyAccount) ...[const ChatButton(fromProfile: true)] else
+                if (!context.isCompanyAccount) ...[
+                  ChatButton(
+                    fromProfile: true,
+                    userId: profile.id!,
+                    userName: profile.name,
+                  )
+                ] else
                   GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed(EditCompanyProfileScreen.routeName);

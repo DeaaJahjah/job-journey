@@ -142,7 +142,10 @@ class _ApplicationsScreenState extends State<ApplicationsScreen> {
                           child: Row(
                             children: [
                               Consumer<ChatProvider>(builder: (_, provider, child) {
-                                return const ChatButton();
+                                return ChatButton(
+                                  userId: application.id!,
+                                  userName: application.name,
+                                );
                               }),
                               const SizedBox(width: 5),
                               Expanded(

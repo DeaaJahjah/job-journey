@@ -8,6 +8,7 @@ class VideoCallProvider with ChangeNotifier {
   AgoraSetupModel? agoraSetupModel;
   Future<void> getAgoraSetup() async {
     dataState = DataState.loading;
+    this.agoraSetupModel = null;
     notifyListeners();
     final agoraSetupModel = await VideoCallDbService().getAgoraSetup();
     if (agoraSetupModel == null) {
