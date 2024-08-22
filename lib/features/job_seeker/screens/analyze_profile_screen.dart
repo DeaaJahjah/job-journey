@@ -32,32 +32,32 @@ class _AnalyzeProfileScreenState extends State<AnalyzeProfileScreen> {
         body: ListView(
           padding: const EdgeInsets.all(8.0),
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * .1),
-              child: Image.asset(
-                'assets/images/profile_analyze.png',
-              ),
-            ),
             // Container(
-            //     height: 100,
-            //     alignment: Alignment.center,
-            //     margin: const EdgeInsets.symmetric(horizontal: 60),
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(60),
-            //       gradient: const LinearGradient(begin: Alignment.centerLeft, colors: [lightpurple, purple]),
-            //     ),
-            //     child: Text(
-            //       '${analysisResualt.generalRating}/10',
-            //       style: largTextStyle.copyWith(color: white, fontSize: 26),
-            //     )).animate().scale().fadeIn(),
-            // sizedBoxMedium,
-            // const Align(
-            //   alignment: Alignment.center,
-            //   child: Text(
-            //     'التقييم الكلي لملفك الشخصي',
-            //     style: largTextStyle,
+            //   margin: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * .1),
+            //   child: Image.asset(
+            //     'assets/images/profile_analyze.png',
             //   ),
             // ),
+            Container(
+                height: 100,
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 60),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(60),
+                  gradient: const LinearGradient(begin: Alignment.centerLeft, colors: [lightpurple, purple]),
+                ),
+                child: Text(
+                  '${analysisResualt.generalRating}/10',
+                  style: largTextStyle.copyWith(color: white, fontSize: 26),
+                )).animate().scale().fadeIn(),
+            sizedBoxMedium,
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'التقييم الكلي لملفك الشخصي',
+                style: largTextStyle,
+              ),
+            ),
             sizedBoxLarge,
             const Align(
               alignment: Alignment.centerRight,
@@ -151,93 +151,95 @@ class ImprovmentSectionCard extends StatelessWidget {
                                       BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                   color: brown,
                                 ),
-                                child: Column(
-                                  children: [
-                                    sizedBoxSmall,
-                                    Text(
-                                      sectionName,
-                                      style: largTextStyle,
-                                    ),
-                                    sizedBoxMedium,
-                                    const Divider(
-                                      color: Colors.grey,
-                                      endIndent: 20,
-                                      indent: 20,
-                                      thickness: .5,
-                                    ),
-                                    sizedBoxSmall,
-
-                                    const Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          'نصائح',
+                                child: SizedBox(
+                                  height: MediaQuery.sizeOf(context).height * .8,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        sizedBoxSmall,
+                                        Text(
+                                          sectionName,
                                           style: largTextStyle,
-                                        )),
-                                    sizedBoxSmall,
-                                    ...rating!.improvements!.map((e) => Row(
-                                          children: [
-                                            Container(
-                                              height: 8,
-                                              width: 8,
-                                              decoration:
-                                                  const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                e,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(color: white, letterSpacing: 1),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    sizedBoxSmall,
-
-                                    const Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          'الشكل النهائي',
-                                          style: largTextStyle,
-                                        )),
-                                    sizedBoxSmall,
-
-                                    ...rating!.suggestions!.map((e) => Row(
-                                          children: [
-                                            Container(
-                                              height: 8,
-                                              width: 8,
-                                              decoration:
-                                                  const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                e,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge
-                                                    ?.copyWith(color: white, letterSpacing: 1),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    // Padding(
-                                    //     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-                                    //     child: Flexible(
-                                    //       child: ListView.builder(
-                                    //           shrinkWrap: true,
-                                    //           physics: const NeverScrollableScrollPhysics(),
-                                    //           itemCount: rating.improvements.length,
-                                    //           itemBuilder: (context, index) => sizedBoxMedium),
-                                    //     )),
-                                  ],
+                                        ),
+                                        sizedBoxMedium,
+                                        const Divider(
+                                          color: Colors.grey,
+                                          endIndent: 20,
+                                          indent: 20,
+                                          thickness: .5,
+                                        ),
+                                        sizedBoxSmall,
+                                        const Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              'نصائح',
+                                              style: largTextStyle,
+                                            )),
+                                        sizedBoxSmall,
+                                        ...rating!.improvements!.map((e) => Row(
+                                              children: [
+                                                Container(
+                                                  height: 8,
+                                                  width: 8,
+                                                  decoration:
+                                                      const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    e,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(color: white, letterSpacing: 1),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                        sizedBoxSmall,
+                                        const Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              'الشكل النهائي',
+                                              style: largTextStyle,
+                                            )),
+                                        sizedBoxSmall,
+                                        ...rating!.suggestions!.map((e) => Row(
+                                              children: [
+                                                Container(
+                                                  height: 8,
+                                                  width: 8,
+                                                  decoration:
+                                                      const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    e,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(color: white, letterSpacing: 1),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
+                                            child: Flexible(
+                                              child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics: const NeverScrollableScrollPhysics(),
+                                                  itemCount: rating!.improvements!.length,
+                                                  itemBuilder: (context, index) => sizedBoxMedium),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ));
                             },
@@ -257,11 +259,11 @@ class ImprovmentSectionCard extends StatelessWidget {
                           ),
                   ],
                 ),
-                // const Spacer(),
-                // Text(
-                //   '${rating!.rating}/10',
-                //   style: smallTextStyle,
-                // ),
+                const Spacer(),
+                Text(
+                  '${rating!.rating}/10',
+                  style: smallTextStyle,
+                ),
               ],
             ).animate().fade().slideX(),
           );

@@ -1,1 +1,36 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"job-journey-68723","appId":"1:675581530463:android:72eb7446be6c673f2226ea","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"job-journey-68723","configurations":{"android":"1:675581530463:android:72eb7446be6c673f2226ea","ios":"1:675581530463:ios:809837e8288fe5292226ea","macos":"1:675581530463:ios:809837e8288fe5292226ea","web":"1:675581530463:web:6c4cf941a4b31c802226ea","windows":"1:675581530463:web:721309949e23b3112226ea"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "job-journey-68723",
+          "appId": "1:675581530463:android:72eb7446be6c673f2226ea",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "job-journey-68723",
+          "configurations": {
+            "android": "1:675581530463:android:72eb7446be6c673f2226ea",
+            "ios": "1:675581530463:ios:809837e8288fe5292226ea",
+            "macos": "1:675581530463:ios:809837e8288fe5292226ea",
+            "web": "1:675581530463:web:6c4cf941a4b31c802226ea",
+            "windows": "1:675581530463:web:721309949e23b3112226ea"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}

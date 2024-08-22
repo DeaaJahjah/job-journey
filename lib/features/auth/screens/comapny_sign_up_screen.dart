@@ -63,6 +63,7 @@ class _ComapnySignUpScreenState extends State<ComapnySignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // isLoading = false;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
